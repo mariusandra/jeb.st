@@ -9,6 +9,7 @@ import { loadCatalog, rankApps, renderApps } from "./apps/apps.js";
 import { Triage, renderStories } from "./apps/triage.js";
 import { analyse, draw } from "./apps/calibration.js";
 import { runAll, PLAN } from "./runall.js";
+import * as community from "./community.js";
 
 const $ = id => document.getElementById(id);
 const fmtStatus = s => (s || "").replaceAll("_", " ");
@@ -110,15 +111,54 @@ async function renderHome() {
 
 // ---- rides (bundled + yours) --------------------------------------------------------------------------------------
 async function bundled() { if (!bundledIndex) { try { bundledIndex = await (await fetch("data/rides/index.json")).json(); } catch { bundledIndex = []; } } return bundledIndex; }
+let communityCache = { at: 0, rides: [] };
+async function communityRides() {
+  if (!(await community.available())) return [];
+  if (Date.now() - communityCache.at < 20000) return communityCache.rides;
+  try { communityCache = { at: Date.now(), rides: (await community.listRides({ limit: 500 })).map(r => ({ ...r, source: "community" })) }; } catch { communityCache = { at: Date.now(), rides: [] }; }
+  return communityCache.rides;
+}
 async function allRideSummaries(game) {
   const b = (await bundled()).filter(r => !game || r.game === game).map(r => ({ ...r, source: "bundled" }));
   let mine = []; try { mine = (await listRides()).filter(r => !game || r.game === game).map(r => ({ ...r, source: "you" })); } catch {}
-  return mine.concat(b).sort((x, y) => (y.created_at || "").localeCompare(x.created_at || ""));
+  const c = (await communityRides()).filter(r => !game || r.game === game);
+  return mine.concat(c, b).sort((x, y) => (y.submitted_at || y.created_at || "").localeCompare(x.submitted_at || x.created_at || ""));
+}
+const rideModel = s => s.model_name || s.model || "?";
+const filterRides = (rides, { source, model }) => rides.filter(r => (!source || source === "all" || r.source === source) && (!model || rideModel(r) === model));
+function fillModelFilter(sel, rides) {
+  const was = sel.value; const models = [...new Set(rides.map(rideModel))].sort();
+  sel.innerHTML = '<option value="">every model</option>' + models.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join("");
+  sel.value = models.includes(was) ? was : "";
 }
 async function loadRideById(id) {
+  if (id.startsWith("c-")) { try { const r = await community.getRide(id); return { ...r, source: "community" }; } catch { return null; } }
   try { const mine = await getRide(id); if (mine) return { ...mine, source: "you" }; } catch {}
   const entry = (await bundled()).find(r => r.id === id); if (!entry) return null;
   const full = await (await fetch(`data/rides/${entry.file}`)).json(); return { ...entry, ...full, source: "bundled" };
+}
+// ---- submitting ---------------------------------------------------------------------------------------------
+function askDriver() {
+  let name = community.driver.get();
+  if (!name) { name = (prompt("Your driver name for the board (letters, numbers, spaces, . - _ @):", "") || "").trim().slice(0, 40); if (!name) return null; community.driver.set(name); }
+  return name;
+}
+async function submitCurrentRide(button) {
+  if (!ride || ride.source === "bundled" || ride.source === "community") return;
+  if (ride.status === "playing") { button.textContent = "finish the ride first"; return; }
+  const name = askDriver(); if (!name) return;
+  button.disabled = true; button.textContent = "submitting…";
+  try { const r = await community.submitRide(ride, name); ride.submitted_id = r.id; ride.shared = true; await putRide(ride); communityCache.at = 0; renderFrame(); renderRideList(); }
+  catch (e) { button.disabled = false; button.textContent = `submit failed: ${e.message.slice(0, 60)}`; }
+}
+async function submitRun(run, button) {
+  const name = askDriver(); if (!name) return;
+  button.disabled = true; button.textContent = "submitting…";
+  try {
+    const rides = (await Promise.all((run.rides || []).map(id => getRide(id)))).filter(Boolean);
+    const r = await community.submitRun(run, rides, name); run.submitted_id = r.id; await putRun(run); communityCache.at = 0;
+    button.textContent = "submitted ✓"; renderRuns(); renderCommunityRuns();
+  } catch (e) { button.disabled = false; button.textContent = `submit failed: ${e.message.slice(0, 60)}`; }
 }
 async function openRide(id) {
   const r = await loadRideById(id); if (!r) return;
@@ -170,10 +210,10 @@ function renderFrame() {
   $("result").className = "panel result";
   $("result").innerHTML = (finished ? `<strong>${s.score} ${esc(s.score_label || d.scoreLabel)} in ${s.turns} turns</strong>${chips(s)}<br>${fmtStatus(s.status)} · seed ${s.seed} · median ${s.median_decision_ms ?? "—"} ms/decision · ${esc((s.device || "?").toUpperCase())}`
     : `<strong>Live · seed ${s.seed}</strong>${chips(s)}<br>${s.turns} of ${s.max_turns} turns · ${s.score} ${esc(s.score_label || d.scoreLabel)} · median ${s.median_decision_ms ?? "—"} ms/decision`)
-    + (s.overrides ? ` · ${s.overrides} override${s.overrides === 1 ? "" : "s"}` : "") + (s.source === "bundled" ? ` · <span class="muted">someone else's ride</span>` : "")
-    + `<div class="result-actions"><button class="small-btn" id="export-ride">export JSON</button>${s.source !== "bundled" ? `<button class="small-btn" id="share-ride">${ride.shared ? "shared ✓" : "mark as shared"}</button><button class="small-btn danger" id="delete-ride">delete</button>` : ""}</div>`;
+    + (s.overrides ? ` · ${s.overrides} override${s.overrides === 1 ? "" : "s"}` : "") + (s.source === "bundled" ? ` · <span class="muted">someone else's ride</span>` : s.source === "community" ? ` · <span class="muted">driven by ${esc(s.driver || "anonymous")}</span>` : "")
+    + `<div class="result-actions"><button class="small-btn" id="export-ride">export JSON</button>${s.source === "you" ? (ride.submitted_id ? `<a class="small-btn" href="#/ride/${esc(ride.submitted_id)}">on the board ✓</a>` : `<button class="small-btn yellow" id="submit-ride">submit to the board</button>`) + `<button class="small-btn danger" id="delete-ride">delete</button>` : ""}${s.source === "community" ? `<span class="small-btn" style="cursor:default">link: #/ride/${esc(s.id)}</span>` : ""}</div>`;
   $("export-ride").addEventListener("click", () => download(`${ride.id}.json`, ride));
-  if ($("share-ride")) $("share-ride").addEventListener("click", async () => { ride.shared = !ride.shared; await putRide(ride); renderFrame(); });
+  if ($("submit-ride")) $("submit-ride").addEventListener("click", () => submitCurrentRide($("submit-ride")));
   if ($("delete-ride")) $("delete-ride").addEventListener("click", async () => { await deleteRide(ride.id); ride = null; session = null; renderFrame(); renderRideList(); });
 }
 const setPlayLabel = () => { $("play").textContent = timer || stepping ? "Pause" : (isLive() ? "Play" : "Replay"); };
@@ -202,10 +242,12 @@ function newGame() {
   catch (e) { $("result").className = "panel result error"; $("result").textContent = e.message; return; }
   ride = session.ride; index = 0; renderFrame(); renderRideList(); play();
 }
+const sourceTag = (s, live) => live ? "LIVE" : s.source === "you" ? (s.submitted_id ? "yours · on the board" : "yours") : s.source === "community" ? `by ${esc(s.driver || "anonymous")}` : "bundled";
 async function renderRideList() {
-  const rides = await allRideSummaries(gameKey); $("rides-count").textContent = rides.length;
+  const all = await allRideSummaries(gameKey); fillModelFilter($("ride-model"), all);
+  const rides = filterRides(all, { source: $("ride-source").value, model: $("ride-model").value }); $("rides-count").textContent = `${rides.length} of ${all.length}`;
   $("ride-list").innerHTML = rides.map(s => { const cur = ride && ride.id === s.id ? " current" : "", live = s.status === "playing" && session && session.ride.id === s.id;
-    return `<div class="row-item${cur}" data-id="${esc(s.id)}"><span>seed ${s.seed} · ${s.score} ${esc(s.score_label)} · ${s.turns} turns · ${fmtStatus(s.status)}${chips(s)}${s.overrides ? `<span class="chip override">${s.overrides} ov</span>` : ""}</span><span class="tag${live ? " live" : s.source === "you" ? " you" : ""}">${live ? "LIVE" : s.source === "you" ? (s.shared ? "yours · shared" : "yours") : "their ride"}</span></div>`; }).join("") || '<div class="muted small">No rides for this game yet.</div>';
+    return `<div class="row-item${cur}" data-id="${esc(s.id)}"><span>seed ${s.seed} · ${s.score} ${esc(s.score_label)} · ${s.turns} turns · ${fmtStatus(s.status)}${chips(s)}${s.overrides ? `<span class="chip override">${s.overrides} ov</span>` : ""}</span><span class="tag${live ? " live" : s.source === "you" ? " you" : s.source === "community" ? " community" : ""}">${sourceTag(s, live)}</span></div>`; }).join("") || '<div class="muted small">No rides match.</div>';
   $("ride-list").querySelectorAll(".row-item").forEach(r => r.addEventListener("click", () => { stop(); openRide(r.dataset.id); }));
 }
 
@@ -269,11 +311,20 @@ async function enterCalibration() {
 
 // ---- run all --------------------------------------------------------------------------------------------------
 let runAbort = null;
-async function enterRunAll() { fillCarSelects(); $("runall-plan").innerHTML = PLAN.map(p => `<li>${esc(p.label)}</li>`).join(""); renderRuns(); }
+async function enterRunAll() { fillCarSelects(); $("runall-plan").innerHTML = PLAN.map(p => `<li>${esc(p.label)}</li>`).join(""); renderRuns(); renderCommunityRuns(); }
 async function renderRuns() {
   let runs = []; try { runs = await listRuns(); } catch {}
-  $("runs").innerHTML = runs.map(r => `<div class="run-card"><div class="car-head"><b>${esc(r.model)}</b><span class="muted small">${new Date(r.created_at).toLocaleString()}</span><span class="grow"></span><button class="small-btn" data-act="export" data-id="${esc(r.id)}">export JSON</button><button class="small-btn danger" data-act="delete" data-id="${esc(r.id)}">delete</button></div>${scorecard(r)}</div>`).join("") || '<div class="muted small">No runs yet in this browser.</div>';
-  $("runs").querySelectorAll("button").forEach(b => b.addEventListener("click", async () => { const r = runs.find(x => x.id === b.dataset.id); if (b.dataset.act === "export") { const rides = (await Promise.all((r.rides || []).map(id => getRide(id)))).filter(Boolean); download(`${r.id}.json`, { ...r, ride_data: rides }); } else { await deleteRun(r.id); renderRuns(); } }));
+  const can = await community.available();
+  $("runs").innerHTML = runs.map(r => `<div class="run-card"><div class="car-head"><b>${esc(r.model)}</b><span class="muted small">${new Date(r.created_at).toLocaleString()}</span><span class="grow"></span>${can ? (r.submitted_id ? `<span class="small-btn" style="cursor:default">on the board ✓</span>` : `<button class="small-btn yellow" data-act="submit" data-id="${esc(r.id)}">submit to the board</button>`) : ""}<button class="small-btn" data-act="export" data-id="${esc(r.id)}">export JSON</button><button class="small-btn danger" data-act="delete" data-id="${esc(r.id)}">delete</button></div>${scorecard(r)}</div>`).join("") || '<div class="muted small">No runs yet in this browser.</div>';
+  $("runs").querySelectorAll("button").forEach(b => b.addEventListener("click", async () => { const r = runs.find(x => x.id === b.dataset.id); if (b.dataset.act === "export") { const rides = (await Promise.all((r.rides || []).map(id => getRide(id)))).filter(Boolean); download(`${r.id}.json`, { ...r, ride_data: rides }); } else if (b.dataset.act === "submit") submitRun(r, b); else { await deleteRun(r.id); renderRuns(); } }));
+}
+async function renderCommunityRuns() {
+  if (!(await community.available())) { $("community-runs").innerHTML = '<div class="muted small">Submissions are not set up on this deployment yet.</div>'; return; }
+  let runs = []; try { runs = await community.listRuns({ limit: 100 }); } catch (e) { $("community-runs").innerHTML = `<div class="muted small">${esc(e.message)}</div>`; return; }
+  const sel = $("runs-model"), was = sel.value; const models = [...new Set(runs.map(r => r.model))].sort();
+  sel.innerHTML = '<option value="">every model</option>' + models.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join(""); sel.value = models.includes(was) ? was : "";
+  const shown = runs.filter(r => !sel.value || r.model === sel.value);
+  $("community-runs").innerHTML = shown.map(r => `<div class="run-card"><div class="car-head"><b>${esc(r.model)}</b><span class="muted small">by ${esc(r.driver)} · ${new Date(r.submitted_at).toLocaleString()}${r.note ? ` · ${esc(r.note)}` : ""}</span><span class="grow"></span>${(r.ride_ids || []).length ? `<a class="small-btn" href="#/rides">${r.ride_ids.length} rides</a>` : ""}</div>${scorecard(r)}</div>`).join("") || '<div class="muted small">Nobody has submitted a run yet. Be the first.</div>';
 }
 const scorecard = r => `<table class="score"><tr><th>app</th><th>score</th><th>games</th><th>turns</th><th>median ms</th><th>outcome</th></tr>${r.rows.map(x => `<tr><td>${esc(x.app)}<div class="muted small">${esc(x.label)}</div></td><td><b>${x.score}</b> <span class="muted small">${esc(x.score_label)}</span></td><td>${x.games}</td><td>${x.turns}</td><td>${x.median_ms ?? "—"}</td><td class="small">${x.statuses.map(esc).join(", ")}</td></tr>`).join("")}</table>`;
 async function startRunAll() {
@@ -284,8 +335,10 @@ async function startRunAll() {
     const run = await runAll(car, { signal: runAbort.signal,
       onProgress: p => { $("runall-progress").style.width = `${(p.fraction * 100).toFixed(0)}%`; $("runall-status").textContent = `${p.label}${p.detail ? ` · ${p.detail}` : ""}`; },
       onFrame: (s, f) => { if (RENDERERS[s.ride.game]) { RENDERERS[s.ride.game](liveBoard, f); $("runall-live").textContent = `${s.ride.game_title}: turn ${f.turn}, ${f.score} ${s.ride.score_label}${f.action ? `, ${f.action} (${Math.round(f.latency_ms)} ms)` : ""}`; } } });
-    $("runall-result").innerHTML = `<h3>Scorecard · ${esc(run.model)}</h3>${scorecard(run)}<div class="result-actions"><button class="small-btn" id="runall-export">export JSON (with rides)</button></div>`;
+    const can = await community.available();
+    $("runall-result").innerHTML = `<h3>Scorecard · ${esc(run.model)}</h3>${scorecard(run)}<div class="result-actions">${can ? `<button class="small-btn yellow" id="runall-submit">submit to the board</button>` : ""}<button class="small-btn" id="runall-export">export JSON (with rides)</button></div>`;
     $("runall-export").addEventListener("click", async () => { const rides = (await Promise.all(run.rides.map(id => getRide(id)))).filter(Boolean); download(`${run.id}.json`, { ...run, ride_data: rides }); });
+    if ($("runall-submit")) $("runall-submit").addEventListener("click", () => submitRun(run, $("runall-submit")));
     renderRuns();
   } catch (e) { $("runall-status").textContent = e.name === "AbortError" ? "stopped" : `failed: ${e.message}`; }
   finally { $("runall-start").disabled = !readyCars().length; $("runall-stop").disabled = true; runAbort = null; }
@@ -293,11 +346,14 @@ async function startRunAll() {
 
 // ---- rides view -----------------------------------------------------------------------------------------------
 async function enterRides() {
-  const rides = await allRideSummaries(null); const filter = $("rides-filter").value;
-  const shown = rides.filter(r => filter === "all" || (filter === "you" ? r.source === "you" : r.source === "bundled"));
-  $("all-rides").innerHTML = shown.map(s => `<div class="row-item" data-id="${esc(s.id)}"><span><b>${esc(REGISTRY[s.game] ? REGISTRY[s.game].title : s.game)}</b> · seed ${s.seed} · ${s.score} ${esc(s.score_label)} · ${s.turns} turns · ${fmtStatus(s.status)}${chips(s)}</span><span class="tag${s.source === "you" ? " you" : ""}">${s.source === "you" ? (s.shared ? "yours · shared" : "yours") : "their ride"}</span></div>`).join("") || '<div class="muted small">nothing here</div>';
+  const gsel = $("rides-game"); if (gsel.options.length <= 1) gsel.innerHTML = '<option value="">every game</option>' + GAMES.map(g => `<option value="${g.key}">${esc(g.title)}</option>`).join("");
+  const all = await allRideSummaries(null); fillModelFilter($("rides-model"), all);
+  const shown = filterRides(all, { source: $("rides-filter").value, model: $("rides-model").value }).filter(r => !gsel.value || r.game === gsel.value);
+  $("all-rides").innerHTML = shown.map(s => `<div class="row-item" data-id="${esc(s.id)}"><span><b>${esc(REGISTRY[s.game] ? REGISTRY[s.game].title : s.game)}</b> · seed ${s.seed} · ${s.score} ${esc(s.score_label)} · ${s.turns} turns · ${fmtStatus(s.status)}${chips(s)}</span><span class="tag${s.source === "you" ? " you" : s.source === "community" ? " community" : ""}">${sourceTag(s, false)}</span></div>`).join("") || '<div class="muted small">nothing matches</div>';
   $("all-rides").querySelectorAll(".row-item").forEach(r => r.addEventListener("click", () => go(`ride/${r.dataset.id}`)));
-  $("rides-summary").textContent = `${rides.filter(r => r.source === "you").length} yours · ${rides.filter(r => r.source === "bundled").length} bundled`;
+  const n = k => all.filter(r => r.source === k).length;
+  $("rides-summary").textContent = `${shown.length} shown · ${n("you")} yours · ${n("community")} on the board · ${n("bundled")} bundled`;
+  const name = community.driver.get(); $("driver-name").value = name;
 }
 async function importRide(file) {
   const data = JSON.parse(await file.text()); const rides = data.ride_data || (Array.isArray(data) ? data : [data]);
@@ -334,7 +390,10 @@ $("calib-horizon").addEventListener("input", () => { $("calib-horizon-value").te
 $("calib-horizon").addEventListener("change", enterCalibration);
 $("runall-start").addEventListener("click", startRunAll);
 $("runall-stop").addEventListener("click", () => runAbort && runAbort.abort());
-$("rides-filter").addEventListener("change", enterRides);
+["rides-filter", "rides-game", "rides-model"].forEach(id => $(id).addEventListener("change", enterRides));
+["ride-source", "ride-model"].forEach(id => $(id).addEventListener("change", renderRideList));
+$("runs-model").addEventListener("change", renderCommunityRuns);
+$("driver-name").addEventListener("change", () => community.driver.set($("driver-name").value.trim().slice(0, 40)));
 $("import-ride").addEventListener("change", e => { if (e.target.files[0]) importRide(e.target.files[0]); e.target.value = ""; });
 
 renderCarPills(); fillCarSelects(); route(); probeAll(); setInterval(probeAll, 30000);

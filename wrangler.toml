@@ -1,0 +1,17 @@
+# Cloudflare Pages configuration for jeb.st. The site is static; functions/ holds the TypeSafe hop and the board API.
+#
+# The board needs a D1 database bound as DB. One-time setup (needs `wrangler login`):
+#   npx wrangler d1 create jebst                        # prints a database_id
+#   npx wrangler d1 execute jebst --remote --file schema.sql
+# then uncomment the block below, paste the id, commit and push. Until then the API answers 503 and the page hides
+# the submit buttons. Local development does not need the block (Pages dev cannot take another config file):
+#   npx wrangler pages dev . --d1 DB --port 8788      # then apply schema.sql to the sqlite file it creates:
+#   sqlite3 .wrangler/state/v3/d1/miniflare-D1DatabaseObject/*.sqlite < schema.sql
+name = "jeb-st"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "."
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "jebst"
+# database_id = "paste-the-id-from-wrangler-d1-create"

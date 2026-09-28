@@ -97,6 +97,49 @@ presets, the four app-picker prompts) and produces a scorecard. Runs are saved
 in the browser and export with their rides. There is no leaderboard yet; the
 export is what a submission will be.
 
+## The board: submitting and browsing runs
+
+Rides and Run all scorecards can be submitted to a shared board and browsed
+by everyone, with filters by game, model and source ("on the board", yours,
+bundled) on every replay list. The board is a Cloudflare D1 database behind
+Pages Functions under `functions/api/`:
+
+```
+GET  /api/health            {ok, submissions}
+GET  /api/rides?game=&model=&driver=&run=   submitted rides (no frames)
+GET  /api/rides/:id         one ride with its frames
+POST /api/rides             {ride, driver, note} -> {id}
+GET  /api/runs?model=       submitted scorecards
+GET  /api/runs/:id          one scorecard with its rides' summaries
+POST /api/runs              {run, rides, driver, note} -> {id, ride_ids}
+GET  /api/models            models with counts, for the filters
+```
+
+Submitting is a button on a finished ride's result panel and on a run's
+scorecard; the page asks for a driver name once and remembers it. There is no
+account and no ranking: submissions carry the driver name you give, are public,
+and are validated only for shape and size (a ride is at most 2,001 frames and
+about 1.9 MB; larger rides lose their state text). Rate limiting and
+moderation are for later.
+
+**Setting the board up** (once, needs a Cloudflare login):
+
+```bash
+npx wrangler login
+npx wrangler d1 create jebst                         # prints a database_id
+npx wrangler d1 execute jebst --remote --file schema.sql
+# uncomment the [[d1_databases]] block in wrangler.toml and paste the id, then:
+git commit -am "bind the board" && git push          # Pages binds env.DB from wrangler.toml on the next deploy
+```
+
+Without the binding the API answers 503 and the page hides the submit
+buttons. To work on it locally:
+
+```bash
+npx wrangler pages dev . --d1 DB --port 8788         # static site + functions + a local D1, then once:
+sqlite3 .wrangler/state/v3/d1/miniflare-D1DatabaseObject/*.sqlite < schema.sql
+```
+
 ## The banner
 
 `assets/banner.svg` is a hand-drawn scene. To replace it with a rendered
@@ -127,4 +170,5 @@ js/store.js        IndexedDB for rides, asks and runs
 data/              presets, the PostHog app catalog, bundled rides
 tools/             the CORS relay
 functions/ts/      the Cloudflare Pages Function that fronts api.typesafe.ai
+functions/api/     the board: rides and runs in Cloudflare D1 (schema.sql, wrangler.toml)
 ```
