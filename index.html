@@ -104,6 +104,11 @@
           <details class="prompt"><summary>What the model saw this turn</summary><pre id="state-text"></pre><pre id="question-text"></pre></details>
         </div>
         <div class="side">
+          <div class="panel rides">
+            <div class="decision-head"><h3>Rides</h3><div class="muted small" id="rides-count"></div></div>
+            <div class="filters"><select id="ride-source" class="small"><option value="all">everyone</option><option value="you">yours</option><option value="community">on the board</option><option value="bundled">bundled</option></select><select id="ride-model" class="small"><option value="">every model</option></select></div>
+            <div class="list" id="ride-list"></div>
+          </div>
           <div class="panel controls">
             <div class="form">
               <div class="field"><label for="model">Car</label><select id="model" class="big" data-cars="one"></select></div>
@@ -125,11 +130,6 @@
             <div class="override-note" id="override-note"></div>
           </div>
           <div class="panel result" id="result"></div>
-          <div class="panel rides">
-            <div class="decision-head"><h3>Rides</h3><div class="muted small" id="rides-count"></div></div>
-            <div class="filters"><select id="ride-source" class="small"><option value="all">everyone</option><option value="you">yours</option><option value="community">on the board</option><option value="bundled">bundled</option></select><select id="ride-model" class="small"><option value="">every model</option></select></div>
-            <div class="list" id="ride-list"></div>
-          </div>
         </div>
       </div>
     </section>

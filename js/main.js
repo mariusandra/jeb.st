@@ -166,6 +166,7 @@ async function openRide(id) {
   gameKey = r.game; ride = r; index = ride.status === "playing" && session ? ride.frames.length - 1 : 0;
   document.querySelectorAll(".strip a").forEach(a => a.classList.toggle("active", a.dataset.route === `g/${gameKey}`));
   renderGameChrome(); renderFrame(); setPlayLabel(); renderRideList();
+  if (!timer) play();                                   // a selected ride starts playing by itself
 }
 
 // ---- game view ------------------------------------------------------------------------------------------------
@@ -177,7 +178,11 @@ function chips(s) {
   (d ? d.options : []).forEach(o => { const v = (s.options || {})[o.key]; if (v === undefined || v === null || v === o.default || v === false || v === "none") return; out += `<span class="chip">${esc(v === true ? o.label : `${o.label}:${String(v).replace("_", " ")}`)}</span>`; });
   return out + `<span class="chip model">${esc(s.model || "?")}</span>` + (s.opponent ? `<span class="chip model">vs ${esc(s.opponent)}</span>` : "");
 }
-function enterGame() { if (ride && ride.game !== gameKey) { ride = null; session = null; } renderGameChrome(); renderFrame(); setPlayLabel(); renderRideList(); }
+async function enterGame() {
+  if (ride && ride.game !== gameKey) { ride = null; session = null; }
+  renderGameChrome(); renderFrame(); setPlayLabel(); await renderRideList();
+  if (!ride) { const first = (await allRideSummaries(gameKey))[0]; if (first) openRide(first.id); }   // open the newest ride and start it
+}
 function renderGameChrome() {
   const d = desc(); $("game-title").textContent = d.title; $("game-blurb").textContent = d.blurb; $("max-turns").value = d.defaultMaxTurns; $("max-turns").max = d.maxTurnsLimit; $("score-label").textContent = d.scoreLabel;
   const saved = ls.get(`jebst-options-${gameKey}`, {});
