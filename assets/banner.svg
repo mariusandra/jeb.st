@@ -63,8 +63,8 @@
     <rect x="0" y="0" width="8" height="90" fill="url(#pole)"/>
     <g transform="translate(4 -14) rotate(2)">
       <rect x="-70" y="-30" width="140" height="44" rx="5" fill="#f4f4f2" stroke="#111" stroke-width="4"/>
-      <text x="0" y="1" text-anchor="middle" fill="#111" font-family="Overpass, Inter, Arial, sans-serif" font-weight="900" font-size="20" letter-spacing="1">ONE PASS</text>
-      <text x="0" y="-13" text-anchor="middle" fill="#e5484d" font-family="Overpass, Inter, Arial, sans-serif" font-weight="900" font-size="9" letter-spacing="2" transform="translate(0 -10)">SPEED LIMIT</text>
+      <text x="0" y="6" text-anchor="middle" fill="#111" font-family="Overpass, Inter, Arial, sans-serif" font-weight="900" font-size="20" letter-spacing="1">ONE PASS</text>
+      <text x="0" y="-17" text-anchor="middle" fill="#e5484d" font-family="Overpass, Inter, Arial, sans-serif" font-weight="900" font-size="9" letter-spacing="2">SPEED LIMIT</text>
     </g>
   </g>
   <!-- horizon glow -->
