@@ -68,8 +68,8 @@
             <label>Name <input id="car-name" required placeholder="my 4B on the GPU box"></label>
             <label>Kind <select id="car-kind"><option value="systemone">/v1/systemone server (decider, jevk5, imajev, any TypeSafe-compatible endpoint)</option><option value="typesafe">TypeSafe Jev, hosted (needs your API key)</option><option value="posthog">PostHog AI gateway (needs a phs_ project secret key)</option></select></label>
             <label>URL <input id="car-url" required placeholder="http://127.0.0.1:8001"></label>
-            <label id="car-model-row">Model alias <input id="car-model" placeholder="jev-latest"></label>
-            <label id="car-key-row">API key <input id="car-key" type="password" autocomplete="off" placeholder="stays in this browser"></label>
+            <label id="car-model-row"><span id="car-model-label">Model</span> <input id="car-model" placeholder="optional"></label>
+            <label id="car-key-row"><span id="car-key-label">API key</span> <input id="car-key" type="password" autocomplete="off" placeholder="stays in this browser"></label>
             <label>Note <input id="car-note" placeholder="optional"></label>
             <div class="row gap"><button type="submit" class="btn yellow">Save</button><button type="button" id="car-cancel" class="btn ghost">Cancel</button></div>
           </form>

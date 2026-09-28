@@ -81,7 +81,8 @@ function editCar(car) {
 }
 function onKindChange() {
   const kind = $("car-kind").value, ts = kind === "typesafe", ph = kind === "posthog";
-  $("car-key-row").style.display = ts || ph ? "" : "none"; $("car-model-row").style.display = ts || ph ? "" : "none";
+  $("car-key-label").textContent = ts ? "API key (TypeSafe)" : ph ? "API key (phs_ project secret key, scope llm_gateway:read)" : "API key (optional; sent as a Bearer token if the server wants one)";
+  $("car-model-label").textContent = ts ? "Model alias" : ph ? "Model id on the gateway" : "Model (optional; most servers ignore it)";
   if (ts && !/typesafe|\/ts$/.test($("car-url").value)) $("car-url").value = "/ts";
   if (ph && !/posthog\.com/.test($("car-url").value)) $("car-url").value = "https://gateway.us.posthog.com";
   if ((ts || ph) && !$("car-model").value) $("car-model").value = ts ? "jev-latest" : "posthog/hogference/jevk5-fp8-0.2";

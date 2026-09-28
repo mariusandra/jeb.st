@@ -15,11 +15,22 @@ export function loadCars() {
   try {
     const cars = JSON.parse(localStorage.getItem(KEY) || "null");
     // cars saved by an earlier version pointed TypeSafe straight at api.typesafe.ai, which browsers cannot reach
-    if (Array.isArray(cars) && cars.length) return cars.map(c => (c.kind === "typesafe" && /^https:\/\/api\.typesafe\.ai\/?$/.test(c.url || "") ? { ...c, url: "/ts" } : c));
+    if (Array.isArray(cars) && cars.length) {
+      const saved = cars.map(c => (c.kind === "typesafe" && /^https:\/\/api\.typesafe\.ai\/?$/.test(c.url || "") ? { ...c, url: "/ts" } : c));
+      // a default car added in a later version (the PostHog gateway) joins a list saved earlier, unless it was removed on purpose
+      const removed = new Set(JSON.parse(localStorage.getItem(KEY + "-removed") || "[]"));
+      for (const d of DEFAULT_CARS) if (!saved.some(c => c.id === d.id) && !removed.has(d.id)) saved.push({ ...d });
+      return saved;
+    }
   } catch {}
   return DEFAULT_CARS.map(c => ({ ...c }));
 }
-export function saveCars(cars) { try { localStorage.setItem(KEY, JSON.stringify(cars)); } catch {} }
+export function saveCars(cars) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(cars));
+    localStorage.setItem(KEY + "-removed", JSON.stringify(DEFAULT_CARS.filter(d => !cars.some(c => c.id === d.id)).map(d => d.id)));
+  } catch {}
+}
 export function currentCarId() { try { return localStorage.getItem(CURRENT) || ""; } catch { return ""; } }
 export function setCurrentCar(id) { try { localStorage.setItem(CURRENT, id); } catch {} }
 export const carById = (cars, id) => cars.find(c => c.id === id) || null;
