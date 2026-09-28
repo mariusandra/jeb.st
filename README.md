@@ -16,8 +16,9 @@ storage. Static hosting is enough.
 python3 -m http.server 8080          # from this folder, then open http://localhost:8080
 ```
 
-Any static host works (GitHub Pages, Cloudflare Pages, an S3 bucket). No build
-step; plain ES modules.
+Any static host works for everything except the TypeSafe hop, which is a
+Cloudflare Pages Function (build command empty, output directory `/`). No
+build step; plain ES modules.
 
 ## The strip
 
@@ -51,16 +52,25 @@ your own API key. Add them in the **Garage**. Names, URLs and keys are kept in
 `localStorage` and sent only to the car itself.
 
 **CORS.** The browser talks to the car directly, so the server has to allow
-cross-origin requests from the page. Most local model servers do not. Run the
-relay next to the server and point the car at the relay:
+cross-origin requests from the page, and an https page may only reach
+`127.0.0.1` when the server also answers Chrome's private-network preflight.
+Model servers do neither. Run the relay next to the server and point the car
+at the relay:
 
 ```bash
 python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765
-python3 tools/jebst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
 ```
 
-With `--api-key` the relay attaches the key, so it never has to be typed into
-the page.
+**TypeSafe** refuses browser calls altogether (no `Access-Control-Allow-Origin`
+for outside origins), so the TypeSafe car defaults to `/ts`, a Cloudflare
+Pages Function in `functions/ts/` that forwards the request and the caller's
+`Authorization` header to `api.typesafe.ai` and stores nothing. It exists only
+on the Cloudflare deployment; when you serve the site with `python3 -m
+http.server`, run the relay with the key instead and point the car at it:
+
+```bash
+python3 tools/jebst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
+```
 
 **Someone else's car** is just a public endpoint: paste its URL.
 
@@ -108,4 +118,5 @@ js/apps/*.js       text decisions, app picker, HN triage, calibration
 js/store.js        IndexedDB for rides, asks and runs
 data/              presets, the PostHog app catalog, bundled rides
 tools/             the CORS relay
+functions/ts/      the Cloudflare Pages Function that fronts api.typesafe.ai
 ```

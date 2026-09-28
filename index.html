@@ -77,10 +77,10 @@
         <div class="panel notice tall">
           <h3>Bringing your own car</h3>
           <p>A car is any server that speaks TypeSafe's <code>POST /v1/systemone</code>: <a href="https://github.com/Mapika/decider" target="_blank" rel="noopener">decider</a>, <a href="https://github.com/allebee/jevk5" target="_blank" rel="noopener">JevK5</a>, <a href="https://github.com/mohit67890/imajev" target="_blank" rel="noopener">imajev</a>, or TypeSafe's own Jev with your key.</p>
-          <p><b>The browser talks to it directly</b>, so the server must allow cross-origin requests from this page. Most local servers do not by default. Run the tiny relay that ships with this site next to your server and point the car at it:</p>
+          <p><b>The browser talks to it directly</b>, so the server must allow cross-origin requests from this page. Model servers do not, and an https page like this one may only reach <code>127.0.0.1</code> through a server that also answers Chrome's private-network check. The tiny relay that ships with this site (<a href="https://github.com/mariusandra/jeb.st/blob/main/tools/jebst-proxy.py" target="_blank" rel="noopener">tools/jebst-proxy.py</a>, standard library only) does both. Run it next to your server and point the car at it:</p>
           <pre>python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765</pre>
-          <p>Then add a car with URL <code>http://127.0.0.1:8765</code>. The relay adds the CORS headers and, with <code>--api-key</code>, can hold a TypeSafe key so it never reaches the page.</p>
-          <p><b>Keys and URLs stay in this browser's storage.</b> Nothing about your cars is sent anywhere but to the car itself. Every request to a hosted service is billed to your key.</p>
+          <p>Then set the car's URL to <code>http://127.0.0.1:8765</code>. Chrome may ask once whether this site may reach your local network; allow it.</p>
+          <p><b>TypeSafe's API refuses browser calls</b>, so the TypeSafe car goes through this site's own hop at <code>/ts</code>: a Cloudflare function that forwards your request and key to api.typesafe.ai and keeps neither. The key itself stays in this browser. Every request is billed to it.</p>
           <p><b>Someone else's car</b> is a public endpoint they gave you: paste its URL, same as your own.</p>
         </div>
       </div>

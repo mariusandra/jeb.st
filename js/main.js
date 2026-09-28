@@ -79,7 +79,7 @@ function editCar(car) {
   $("car-url").value = car ? car.url : "http://127.0.0.1:8001"; $("car-model").value = car ? (car.model || "") : ""; $("car-key").value = car ? (car.apiKey || "") : ""; $("car-note").value = car ? (car.note || "") : "";
   $("car-form").classList.add("open"); $("car-form-title").textContent = car ? `Edit ${car.name}` : "Add a car"; onKindChange();
 }
-function onKindChange() { const ts = $("car-kind").value === "typesafe"; $("car-key-row").style.display = ts ? "" : "none"; $("car-model-row").style.display = ts ? "" : "none"; if (ts && !$("car-url").value.includes("typesafe")) $("car-url").value = "https://api.typesafe.ai"; if (ts && !$("car-model").value) $("car-model").value = "jev-latest"; }
+function onKindChange() { const ts = $("car-kind").value === "typesafe"; $("car-key-row").style.display = ts ? "" : "none"; $("car-model-row").style.display = ts ? "" : "none"; if (ts && !/typesafe|\/ts$/.test($("car-url").value)) $("car-url").value = "/ts"; if (ts && !$("car-model").value) $("car-model").value = "jev-latest"; }
 async function saveCarForm(e) {
   e.preventDefault();
   const id = $("car-form").dataset.id || newCarId();
@@ -182,7 +182,8 @@ async function tick() {
   if (index < ride.frames.length - 1) { index += 1; renderFrame(); }
   else if (isLive()) { const more = await stepLive(); if (!more) return; }
   else { stop(); return; }
-  if (timer !== null) timer = setTimeout(tick, Number($("speed").value));
+  const speed = Number($("speed").value);
+  if (timer !== null) timer = setTimeout(tick, speed === 0 && !isLive() ? 900 : speed);   // "as fast as the model" only means something live; replays run at 1x
 }
 function play() { if (!ride) return; if (timer) { stop(); return; } if (!isLive() && atEnd()) index = 0; renderFrame(); timer = setTimeout(tick, 40); setPlayLabel(); }
 function newGame() {
