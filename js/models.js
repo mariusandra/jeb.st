@@ -6,7 +6,10 @@ const CURRENT = "jebst-car";
 export const DEFAULT_CARS = [
   { id: "local-8001", name: "local car on :8001", kind: "systemone", url: "http://127.0.0.1:8001", note: "a decider / jevk5 / imajev server on this machine" },
   { id: "typesafe", name: "TypeSafe Jev (your key)", kind: "typesafe", url: "/ts", model: "jev-latest", apiKey: "", note: "the real thing, paid per request; goes through this site's /ts hop because api.typesafe.ai refuses browser calls" },
+  { id: "posthog-us", name: "PostHog AI gateway (your phs_ key)", kind: "posthog", url: "https://gateway.us.posthog.com", model: "posthog/hogference/jevk5-fp8-0.2", apiKey: "", note: "PostHog's gateway serving JevK5; a project secret key with the llm_gateway:read scope; EU projects use gateway.eu.posthog.com" },
 ];
+export const POSTHOG_DEFAULT_MODEL = "posthog/hogference/jevk5-fp8-0.2";
+export const POSTHOG_GATEWAYS = { us: "https://gateway.us.posthog.com", eu: "https://gateway.eu.posthog.com" };
 
 export function loadCars() {
   try {
@@ -29,6 +32,7 @@ const explain = (car, e) => {
   if (e.name !== "TypeError") return `${e.name}: ${e.message}`;
   if (car.url.startsWith("/")) return "this host has no /ts relay (deploy on Cloudflare Pages, or run tools/jebst-proxy.py --target https://api.typesafe.ai and point the car at it)";
   if (car.kind === "typesafe") return "api.typesafe.ai refuses browser calls; set the URL to /ts on jeb.st or run tools/jebst-proxy.py with --api-key";
+  if (car.kind === "posthog") return "gateway unreachable (check the region host: gateway.us.posthog.com or gateway.eu.posthog.com)";
   if (/^http:\/\/(127\.0\.0\.1|localhost)/.test(car.url) && location.protocol === "https:") return "blocked: an https page can only reach a local server through tools/jebst-proxy.py (adds CORS and the private-network header); Chrome may also ask you to allow it";
   return "unreachable or blocked by CORS: put tools/jebst-proxy.py in front of the server";
 };
@@ -47,6 +51,18 @@ export async function probe(car, timeoutMs = 4000) {
       const r = await fetch(`${carUrl(car)}/v1/models`, { headers: headers(car), signal: ctrl.signal });
       info.ready = r.ok; info.modelName = car.model || "jev-latest"; info.device = "cloud";
       if (!r.ok) info.error = r.status === 401 || r.status === 403 ? `HTTP ${r.status}: the key was refused` : (r.status === 404 && car.url.startsWith("/") ? "no /ts relay on this host" : `HTTP ${r.status}`);
+      return info;
+    }
+    if (car.kind === "posthog") {
+      if (!car.apiKey) { info.error = "no API key (a phs_ project secret key with the llm_gateway:read scope)"; return info; }
+      info.modelName = car.model || POSTHOG_DEFAULT_MODEL; info.device = "posthog gateway";
+      const models = await fetch(`${carUrl(car)}/v1/models`, { headers: headers(car), signal: ctrl.signal });
+      if (models.status === 401 || models.status === 403) { info.error = `HTTP ${models.status}: the key was refused`; return info; }
+      // the only way to know the decision route works for this key is to ask it something tiny
+      const r = await fetch(`${carUrl(car)}/v1/systemone`, { method: "POST", headers: headers(car), signal: ctrl.signal,
+        body: JSON.stringify({ model: info.modelName, state: "2 + 2 = 4", questions: { probe: { type: "noul", instructions: "Is the statement true?" } } }) });
+      if (r.ok) { const j = await r.json(); info.ready = true; info.modelName = j.model || info.modelName; return info; }
+      info.error = r.status === 404 ? "gateway reachable, but /v1/systemone is not enabled for this key or region yet (PostHog is rolling the decision route out)" : r.status === 401 || r.status === 403 ? `HTTP ${r.status}: the key was refused` : `HTTP ${r.status}: ${(await r.text()).slice(0, 120)}`;
       return info;
     }
     let health = null;
@@ -70,7 +86,7 @@ export async function probe(car, timeoutMs = 4000) {
 // One request: a state and typed questions -> {model, answers, usage}. latencyMs is measured here.
 export async function ask(car, state, questions, { signal } = {}) {
   const body = { state, questions };
-  if (car.kind === "typesafe" || car.model) body.model = car.model || "jev-latest";
+  if (car.kind === "typesafe" || car.kind === "posthog" || car.model) body.model = car.model || (car.kind === "posthog" ? POSTHOG_DEFAULT_MODEL : "jev-latest");
   const started = performance.now();
   let r;
   try { r = await fetch(`${carUrl(car)}/v1/systemone`, { method: "POST", headers: headers(car), body: JSON.stringify(body), signal }); }

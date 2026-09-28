@@ -72,6 +72,14 @@ http.server`, run the relay with the key instead and point the car at it:
 python3 tools/jebst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
 ```
 
+**PostHog's AI gateway** serves JevK5 (`posthog/hogference/jevk5-fp8-0.2`)
+on the same `/v1/systemone` route at `gateway.us.posthog.com` or
+`gateway.eu.posthog.com`, with a project secret key (`phs_…`, scope
+`llm_gateway:read`) as the bearer. The gateway allows browser calls, so this
+car needs no relay. The garage check sends one tiny yes/no question to see
+whether the decision route is enabled for the key; PostHog is still rolling
+it out, and a 404 there means not yet.
+
 **Someone else's car** is just a public endpoint: paste its URL.
 
 ## Rides

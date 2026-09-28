@@ -66,7 +66,7 @@
           <form id="car-form" class="panel car-form">
             <h3 id="car-form-title">Add a car</h3>
             <label>Name <input id="car-name" required placeholder="my 4B on the GPU box"></label>
-            <label>Kind <select id="car-kind"><option value="systemone">/v1/systemone server (decider, jevk5, imajev, any TypeSafe-compatible endpoint)</option><option value="typesafe">TypeSafe Jev, hosted (needs your API key)</option></select></label>
+            <label>Kind <select id="car-kind"><option value="systemone">/v1/systemone server (decider, jevk5, imajev, any TypeSafe-compatible endpoint)</option><option value="typesafe">TypeSafe Jev, hosted (needs your API key)</option><option value="posthog">PostHog AI gateway (needs a phs_ project secret key)</option></select></label>
             <label>URL <input id="car-url" required placeholder="http://127.0.0.1:8001"></label>
             <label id="car-model-row">Model alias <input id="car-model" placeholder="jev-latest"></label>
             <label id="car-key-row">API key <input id="car-key" type="password" autocomplete="off" placeholder="stays in this browser"></label>
@@ -81,6 +81,7 @@
           <pre>python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765</pre>
           <p>Then set the car's URL to <code>http://127.0.0.1:8765</code>. Chrome may ask once whether this site may reach your local network; allow it.</p>
           <p><b>TypeSafe's API refuses browser calls</b>, so the TypeSafe car goes through this site's own hop at <code>/ts</code>: a Cloudflare function that forwards your request and key to api.typesafe.ai and keeps neither. The key itself stays in this browser. Every request is billed to it.</p>
+          <p><b>PostHog's AI gateway</b> serves JevK5 as <code>posthog/hogference/jevk5-fp8-0.2</code> on the same <code>/v1/systemone</code> route, and it does allow browser calls, so that car talks to <code>gateway.us.posthog.com</code> (or <code>gateway.eu.posthog.com</code>) directly with a project secret key that has the <code>llm_gateway:read</code> scope. PostHog is still rolling the decision route out; until it is enabled for your project the check reports that plainly. Requests are billed to your gateway wallet.</p>
           <p><b>Someone else's car</b> is a public endpoint they gave you: paste its URL, same as your own.</p>
         </div>
       </div>

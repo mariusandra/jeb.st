@@ -63,9 +63,9 @@ function fillCarSelects() {
 function renderGarage() {
   $("cars").innerHTML = cars.map(c => { const i = carInfo[c.id] || {}; const cls = i.ready ? "ready" : (i.error ? "down" : "loading");
     return `<div class="car${currentCarId() === c.id ? " current" : ""}" data-id="${esc(c.id)}">
-      <div class="car-head"><span class="dot ${cls}"></span><b>${esc(c.name)}</b><span class="cat">${esc(c.kind === "typesafe" ? "TypeSafe" : "systemone")}</span><span class="grow"></span>
+      <div class="car-head"><span class="dot ${cls}"></span><b>${esc(c.name)}</b><span class="cat">${esc(c.kind === "typesafe" ? "TypeSafe" : c.kind === "posthog" ? "PostHog gateway" : "systemone")}</span><span class="grow"></span>
         <button class="small-btn" data-act="use">${currentCarId() === c.id ? "driving" : "drive this"}</button><button class="small-btn" data-act="edit">edit</button><button class="small-btn" data-act="probe">check</button><button class="small-btn danger" data-act="delete">remove</button></div>
-      <div class="car-meta">${esc(c.url)}${c.kind === "typesafe" ? ` · model ${esc(c.model || "jev-latest")} · key ${c.apiKey ? "set" : "missing"}` : ""}${i.ready ? ` · <span class="ok">${esc(i.modelName || "ready")}${i.device ? ` on ${esc(i.device)}` : ""}${i.temperature != null ? ` · T ${i.temperature}` : ""}</span>` : (i.error ? ` · <span class="bad">${esc(i.error)}</span>` : " · checking…")}${c.note ? `<br><span class="muted">${esc(c.note)}</span>` : ""}</div></div>`; }).join("");
+      <div class="car-meta">${esc(c.url)}${c.kind === "typesafe" || c.kind === "posthog" ? ` · model ${esc(c.model || (c.kind === "posthog" ? "posthog/hogference/jevk5-fp8-0.2" : "jev-latest"))} · key ${c.apiKey ? "set" : "missing"}` : ""}${i.ready ? ` · <span class="ok">${esc(i.modelName || "ready")}${i.device ? ` on ${esc(i.device)}` : ""}${i.temperature != null ? ` · T ${i.temperature}` : ""}</span>` : (i.error ? ` · <span class="bad">${esc(i.error)}</span>` : " · checking…")}${c.note ? `<br><span class="muted">${esc(c.note)}</span>` : ""}</div></div>`; }).join("");
   $("cars").querySelectorAll("button").forEach(b => b.addEventListener("click", async () => {
     const id = b.closest(".car").dataset.id; const car = carById(cars, id);
     if (b.dataset.act === "use") { setCurrentCar(id); renderGarage(); fillCarSelects(); }
@@ -79,7 +79,13 @@ function editCar(car) {
   $("car-url").value = car ? car.url : "http://127.0.0.1:8001"; $("car-model").value = car ? (car.model || "") : ""; $("car-key").value = car ? (car.apiKey || "") : ""; $("car-note").value = car ? (car.note || "") : "";
   $("car-form").classList.add("open"); $("car-form-title").textContent = car ? `Edit ${car.name}` : "Add a car"; onKindChange();
 }
-function onKindChange() { const ts = $("car-kind").value === "typesafe"; $("car-key-row").style.display = ts ? "" : "none"; $("car-model-row").style.display = ts ? "" : "none"; if (ts && !/typesafe|\/ts$/.test($("car-url").value)) $("car-url").value = "/ts"; if (ts && !$("car-model").value) $("car-model").value = "jev-latest"; }
+function onKindChange() {
+  const kind = $("car-kind").value, ts = kind === "typesafe", ph = kind === "posthog";
+  $("car-key-row").style.display = ts || ph ? "" : "none"; $("car-model-row").style.display = ts || ph ? "" : "none";
+  if (ts && !/typesafe|\/ts$/.test($("car-url").value)) $("car-url").value = "/ts";
+  if (ph && !/posthog\.com/.test($("car-url").value)) $("car-url").value = "https://gateway.us.posthog.com";
+  if ((ts || ph) && !$("car-model").value) $("car-model").value = ts ? "jev-latest" : "posthog/hogference/jevk5-fp8-0.2";
+}
 async function saveCarForm(e) {
   e.preventDefault();
   const id = $("car-form").dataset.id || newCarId();
