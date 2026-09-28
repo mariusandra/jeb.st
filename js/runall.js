@@ -33,7 +33,13 @@ export async function runAll(car, { onProgress = () => {}, onFrame = () => {}, s
         onProgress({ label: job.label, detail: `seed ${seed}`, fraction: done / total });
         const session = createRide({ game: job.game, seed, maxTurns: job.maxTurns, options: {}, car });
         session.ride.run_id = run.id;
-        while (true) { check(); const { done: over, frame } = await step(session, { signal }); onFrame(session, frame); if (over) break; }
+        while (true) {
+          check();
+          let result;
+          try { result = await step(session, { signal }); }
+          catch (e) { if (e.name === "AbortError") throw e; await new Promise(r => setTimeout(r, 2500)); check(); result = await step(session, { signal }); }   // one retry for a flaky server
+          onFrame(session, result.frame); if (result.done) break;
+        }
         const s = summary(session.ride); scores.push(s.score); statuses.push(s.status); turns += s.turns; lat.push(...session.ride.latencies);
         try { await putRide(session.ride); } catch {}
         run.rides.push(session.ride.id); done += 1;
