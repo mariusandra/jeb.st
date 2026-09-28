@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Support ticket: route, urgency, refund",
+    "state": "Subject: charged twice\n\nHi, I was billed twice for my September subscription (two charges of $29 on the 3rd). I need one of them refunded to my card before rent is due on Friday. The app itself works fine. Account: m.andersen@example.com",
+    "questions": {
+      "department": {"type": "choice", "instructions": "Which team should handle this ticket?",
+        "criteria": {"billing": "charges, invoices, refunds and payment methods", "support": "technical problems with the product", "sales": "pricing, plans and upgrades", "account": "login, password and profile changes"}},
+      "refund_requested": {"type": "noul", "instructions": "Does the customer ask for a refund?"},
+      "urgency": {"type": "score", "instructions": "How urgent is this ticket?", "criteria": ["no deadline mentioned", "wants it soon", "has a hard deadline within days"]},
+      "sentiment": {"type": "score", "instructions": "How is the customer feeling?", "criteria": ["calm and polite", "irritated", "angry or threatening to leave"]}
+    }
+  },
+  {
+    "name": "Bug report: composite triage",
+    "state": "After updating to 4.2.1 the export button does nothing on macOS. Console shows `TypeError: Cannot read properties of undefined (reading 'blob')` in export.js:214. Reloading does not help. Exporting from the old 4.1.9 build still works, so we downgraded for now. Happens for all three people on my team.",
+    "questions": {
+      "severity": {"type": "score", "instructions": "How severe is the reported issue?", "criteria": ["Cosmetic; no impact to functionality", "Broken or degraded feature, but a workaround exists", "Blocking issue; no workaround exists"]},
+      "actionable": {"type": "score", "instructions": "How much does the report give an engineer to work with?", "criteria": ["no details", "some details (what happened)", "clear reproduction steps or error messages"]},
+      "regression": {"type": "noul", "instructions": "Does the report describe a regression, something that used to work in an earlier version?"},
+      "area": {"type": "choice", "instructions": "Which part of the product is affected?", "criteria": {"export": "exporting or downloading files", "editor": "editing content", "auth": "sign-in and permissions", "performance": "slowness or crashes", "other": "anything else"}}
+    }
+  },
+  {
+    "name": "Shell command: risk class",
+    "state": "rm -rf /var/lib/postgresql/data",
+    "questions": {
+      "risk": {"type": "choice", "instructions": "How risky is running this shell command?",
+        "criteria": {"safe": "read-only, or creates files without touching existing ones; nothing to undo", "caution": "changes files, packages or settings but can be undone or redone", "destructive": "deletes or overwrites data, or changes that are hard to reverse"}},
+      "needs_confirmation": {"type": "noul", "instructions": "Should an assistant ask the user to confirm before running this command?"},
+      "reversible": {"type": "score", "instructions": "How reversible is the effect of this command?", "criteria": ["fully reversible", "partly reversible", "irreversible without backups"]}
+    }
+  },
+  {
+    "name": "Situation: firefighter, one critical action",
+    "state": "You are advancing down a narrow hallway with a charged hose line toward a bedroom door 10 feet ahead. Thick black smoke is rolling out of the doorway at the ceiling and the heat has suddenly spiked; you hear a rising whooshing sound. Your partner is 20 feet behind you at the stairwell.",
+    "questions": {
+      "action": {"type": "choice", "instructions": "What is the most critical action to take right now?",
+        "criteria": {"advance": "push forward and force the bedroom door to search it", "cool_ceiling": "drop low and apply a stream to the ceiling to cool the gas layer", "retreat": "withdraw toward the stairwell and your partner immediately", "call_command": "stop and radio command for instructions"}},
+      "flashover_imminent": {"type": "noul", "instructions": "Do the signs indicate an imminent flashover?"},
+      "danger": {"type": "score", "instructions": "How dangerous is the situation for the firefighter?", "criteria": ["routine", "elevated", "serious", "life-threatening"]}
+    }
+  },
+  {
+    "name": "Content moderation",
+    "state": "User comment on a recipe post: \"lol this is the worst recipe I've ever seen, whoever wrote this should never cook again. anyway if anyone wants REAL recipes hit me up on telegram @cheapmeds_24 we also got pills cheap\"",
+    "questions": {
+      "action": {"type": "choice", "instructions": "What should moderation do with this comment?",
+        "criteria": {"allow": "leave it up", "hide": "hide it from the thread but keep the account", "remove_and_warn": "remove it and warn the author", "ban": "remove it and ban the account"}},
+      "spam": {"type": "noul", "instructions": "Does the comment contain spam or solicitation?"},
+      "harassment": {"type": "score", "instructions": "How harassing is the comment toward the post's author?", "criteria": ["not at all", "rude but mild", "personal attack", "threatening"]},
+      "illegal_goods": {"type": "noul", "instructions": "Does the comment offer illegal goods or services?"}
+    }
+  },
+  {
+    "name": "Meeting notes: facts as yes/no",
+    "state": "Standup, Tue. Priya: finished the invoice PDF export, PR is up, needs review from Tom. Tom: still blocked on the staging database, ops says Thursday at the earliest. Lena: customer demo moved from Wednesday to next Monday because the client is travelling. Everyone: no incidents overnight.",
+    "questions": {
+      "demo_this_week": {"type": "noul", "instructions": "Does the customer demo take place this week?"},
+      "tom_blocked": {"type": "noul", "instructions": "Is Tom blocked on something outside the team?"},
+      "pr_needs_review": {"type": "noul", "instructions": "Is there a pull request waiting for review?"},
+      "incident": {"type": "noul", "instructions": "Was there an incident overnight?"},
+      "next_owner": {"type": "choice", "instructions": "Who has to act next so that Priya's work ships?", "criteria": {"Priya": null, "Tom": null, "Lena": null, "ops": null}}
+    }
+  },
+  {
+    "name": "Review: star rating and aspects",
+    "state": "Came here for a birthday dinner. The room is lovely and the staff were warm, but the food took 55 minutes to arrive and my risotto was lukewarm. Dessert was excellent though, and they comped the coffee when we mentioned the wait. Might come back for drinks, not for dinner.",
+    "questions": {
+      "stars": {"type": "score", "instructions": "What star rating does this review express?", "criteria": ["1 star: terrible", "2 stars: poor", "3 stars: mixed", "4 stars: good", "5 stars: excellent"]},
+      "would_return": {"type": "noul", "instructions": "Does the reviewer intend to come back in some form?"},
+      "main_complaint": {"type": "choice", "instructions": "What is the main complaint?", "criteria": {"service": "staff attitude or attentiveness", "wait": "slow service or long waits", "food_quality": "taste or temperature of the food", "price": "value for money", "none": "no complaint"}}
+    }
+  },
+  {
+    "name": "Email: reply needed?",
+    "state": "From: Dana (VP Sales)\nTo: you\nSubject: Re: Q4 pipeline numbers\n\nThanks for the deck. Two things before Thursday's board meeting: (1) can you re-cut slide 7 with EMEA and APAC split out, and (2) do we have the churn number for September yet or is that still with finance? Need both by Wednesday noon.",
+    "questions": {
+      "reply_needed": {"type": "noul", "instructions": "Does this email need a reply from the recipient?"},
+      "deadline": {"type": "choice", "instructions": "When does the sender need the work?", "criteria": {"today": null, "within_days": "a specific day within the week", "no_deadline": null}},
+      "asks": {"type": "score", "instructions": "How many distinct requests does the email make of the recipient?", "criteria": ["none", "one", "two", "three or more"]},
+      "priority": {"type": "score", "instructions": "How high should this sit in the recipient's queue?", "criteria": ["low", "normal", "high", "top"]}
+    }
+  }
+]

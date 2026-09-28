@@ -1,0 +1,426 @@
+{
+ "source": "PostHog/posthog@c4a097c (pull request 106730): getTreeItemsProducts + getTreeItemsMetadata, sidebarToolMeta descriptions and examples, scene descriptions as fallback",
+ "examples": [
+  "Track website visitors",
+  "Query databases",
+  "Debug errors",
+  "Run A/B tests"
+ ],
+ "threshold": 0.5,
+ "apps": [
+  {
+   "name": "AI gateway",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Compare model usage across projects through a shared API."
+  },
+  {
+   "name": "Apps",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Build an internal Python dashboard using your project data."
+  },
+  {
+   "name": "Broadcasts",
+   "category": "Messaging",
+   "description": "",
+   "example": "Send an announcement to a cohort of beta testers."
+  },
+  {
+   "name": "Business knowledge",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Give your AI assistant context about how your business works."
+  },
+  {
+   "name": "Clusters",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Discover common themes in conversations with your AI assistant."
+  },
+  {
+   "name": "Code review",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Review automated findings on a pull request before it merges."
+  },
+  {
+   "name": "Customer analytics",
+   "category": "Analytics",
+   "description": "",
+   "example": "Explore activity across the accounts that use your product."
+  },
+  {
+   "name": "Dashboards",
+   "category": "Analytics",
+   "description": "Bring related insights together in one place. Follow your key metrics over time and share the same view of progress with your team.",
+   "example": "Keep activation, retention, and revenue on a weekly team dashboard."
+  },
+  {
+   "name": "Data catalog",
+   "category": "Analytics",
+   "description": "",
+   "example": "Find the agreed definition of a metric before using it."
+  },
+  {
+   "name": "Data warehouse",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Manage the shared data your team uses for analysis."
+  },
+  {
+   "name": "Datasets",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Keep representative prompts and expected answers for testing."
+  },
+  {
+   "name": "Early access features",
+   "category": "Features",
+   "description": "",
+   "example": "Let interested users opt into a public beta."
+  },
+  {
+   "name": "Endpoints",
+   "category": "Tools",
+   "description": "",
+   "example": "Serve a saved query to your application and track its usage."
+  },
+  {
+   "name": "Engineering analytics",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Find workflows that slow down pull requests."
+  },
+  {
+   "name": "Error tracking",
+   "category": "App monitoring",
+   "description": "Turn exceptions into issues you can investigate. See who was affected and connect errors with the context you need to find the cause.",
+   "example": "Investigate an exception that appeared after a release."
+  },
+  {
+   "name": "Evaluations",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Check whether AI responses meet your quality criteria."
+  },
+  {
+   "name": "Experiments",
+   "category": "Features",
+   "description": "Compare product changes with a controlled test. Measure their effect on the metrics you care about before deciding what to ship.",
+   "example": "Test whether a shorter signup flow improves activation."
+  },
+  {
+   "name": "Feature flags",
+   "category": "Features",
+   "description": "Choose who sees a feature without another deployment. Roll changes out gradually, target a specific group, or turn a feature off when something goes wrong.",
+   "example": "Try a new navigation with your team before rolling it out to everyone."
+  },
+  {
+   "name": "Heatmaps",
+   "category": "Behavior",
+   "description": "See where people click and how far they scroll. Spot overlooked calls to action and places where a page loses attention.",
+   "example": "Check whether visitors reach your pricing call to action."
+  },
+  {
+   "name": "Identity matching",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Review how identities connect across your data."
+  },
+  {
+   "name": "Inbox",
+   "category": "Tools",
+   "description": "",
+   "example": "Review a report about friction discovered in user sessions."
+  },
+  {
+   "name": "LLM analytics",
+   "category": "AI engineering",
+   "description": "Follow your AI application from prompts to responses. Inspect traces, latency, token usage, and cost to understand quality and performance.",
+   "example": "Find the model calls making an assistant slow or expensive."
+  },
+  {
+   "name": "Links",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Create a trackable link for a new campaign."
+  },
+  {
+   "name": "Live Debugger",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Inspect the state of running code when a breakpoint fires."
+  },
+  {
+   "name": "Logs",
+   "category": "App monitoring",
+   "description": "",
+   "example": "Search application logs around the time an error occurred."
+  },
+  {
+   "name": "MCP analytics",
+   "category": "AI engineering",
+   "description": "",
+   "example": "See which tools AI users call and what they are trying to achieve."
+  },
+  {
+   "name": "MCP servers",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Find a server that gives your agent the tools it needs."
+  },
+  {
+   "name": "Marketing analytics",
+   "category": "Analytics",
+   "description": "Analyze your marketing performance across integrations: spend, impressions, conversions, ROAS, and more metrics.",
+   "example": "Compare campaign performance alongside your product data."
+  },
+  {
+   "name": "Metrics",
+   "category": "App monitoring",
+   "description": "",
+   "example": "Investigate a change in application performance over time."
+  },
+  {
+   "name": "Notebooks",
+   "category": "Tools",
+   "description": "Keep an investigation together with notes, insights, and recordings. Give your team the evidence and context behind your conclusions.",
+   "example": "Share a funnel drop-off alongside recordings that explain it."
+  },
+  {
+   "name": "Playground",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Try a revised prompt before using it in your application."
+  },
+  {
+   "name": "Product analytics",
+   "category": "Analytics",
+   "description": "Find out how people discover, use, and return to your product. Explore trends, conversion funnels, retention, and the paths people take.",
+   "example": "Find the step where new users drop out of onboarding."
+  },
+  {
+   "name": "Product tours",
+   "category": "Behavior",
+   "description": "Guide users through your product with interactive tours",
+   "example": "Guide new users through their first useful action."
+  },
+  {
+   "name": "Prompts",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Keep track of changes to the prompts your application uses."
+  },
+  {
+   "name": "Pulse",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Follow what is happening across your project."
+  },
+  {
+   "name": "Replay vision",
+   "category": "Behavior",
+   "description": "",
+   "example": "Explore patterns found in session recordings."
+  },
+  {
+   "name": "SQL editor",
+   "category": "Analytics",
+   "description": "Ask questions that need more than a chart builder. Query your events and warehouse tables together, then turn the results into a table or visualization.",
+   "example": "Join signup events with billing data to compare activation by plan."
+  },
+  {
+   "name": "Session replay",
+   "category": "Behavior",
+   "description": "Watch how people actually experience your product. Follow their clicks and navigation to understand the behavior behind a metric or bug report.",
+   "example": "Watch a failed checkout to see what got in the way."
+  },
+  {
+   "name": "Skills",
+   "category": "Tools",
+   "description": "",
+   "example": "Share reusable instructions with the agents your team uses."
+  },
+  {
+   "name": "Support",
+   "category": "Behavior",
+   "description": "",
+   "example": "Investigate and respond to a customer's support request."
+  },
+  {
+   "name": "Surveys",
+   "category": "Behavior",
+   "description": "Ask people about their experience while it is still fresh. Collect feedback in your product and use it to explain what your analytics cannot.",
+   "example": "Ask people who abandon a flow what they were trying to do."
+  },
+  {
+   "name": "Taggers",
+   "category": "AI engineering",
+   "description": "",
+   "example": "Label AI generations so you can compare different kinds of requests."
+  },
+  {
+   "name": "Tasks",
+   "category": "Tools",
+   "description": "",
+   "example": "Ask an agent to investigate an issue and prepare a code change."
+  },
+  {
+   "name": "Toolbar",
+   "category": "Tools",
+   "description": "",
+   "example": "Inspect elements on your website while setting up tracking."
+  },
+  {
+   "name": "Tracing",
+   "category": "App monitoring",
+   "description": "",
+   "example": "Follow a slow request across services to find the bottleneck."
+  },
+  {
+   "name": "User research",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Run a voice research campaign about a recent product experience."
+  },
+  {
+   "name": "Visual review",
+   "category": "Unreleased",
+   "description": "",
+   "example": "Review visual changes before they reach users."
+  },
+  {
+   "name": "Web analytics",
+   "category": "Analytics",
+   "description": "Understand who visits your website, where they come from, and which pages lead to conversions. Start with traffic, then explore what drives it.",
+   "example": "Find which referral sources bring visitors who sign up."
+  },
+  {
+   "name": "Web scripts",
+   "category": "Tools",
+   "description": "Web scripts allow you to add custom tags and functionality to your website using PostHog.",
+   "example": "Add a website tag without changing your application code."
+  },
+  {
+   "name": "Wizard",
+   "category": "Tools",
+   "description": "",
+   "example": "Review the code changes an agent prepares to set up PostHog."
+  },
+  {
+   "name": "Workflows",
+   "category": "Messaging",
+   "description": "",
+   "example": "Send a follow-up when someone completes an onboarding step."
+  },
+  {
+   "name": "Actions",
+   "category": "Schema",
+   "description": "",
+   "example": "Combine related clicks into a single event for analysis."
+  },
+  {
+   "name": "Annotations",
+   "category": "Metadata",
+   "description": "Add context to changes in your metrics. Mark releases, campaigns, and other milestones so your team can connect a chart with what happened.",
+   "example": "Mark a release date to help explain a change in a chart."
+  },
+  {
+   "name": "Core events",
+   "category": "Schema",
+   "description": "Choose the events that signal meaningful use of your product. Give your team a shared starting point for understanding customer activity.",
+   "example": "Define the events that represent meaningful product usage."
+  },
+  {
+   "name": "Destinations",
+   "category": "Pipeline",
+   "description": "Send events from PostHog to the tools that need them. Connect product activity with the rest of your workflows.",
+   "example": "Send captured events to another tool your team uses."
+  },
+  {
+   "name": "Event definitions",
+   "category": "Schema",
+   "description": "Explore the events captured in your project and document what they mean. Help your team choose the right events for an analysis.",
+   "example": "Check what an event means before adding it to an insight."
+  },
+  {
+   "name": "Event ingestion filtering",
+   "category": "Pipeline",
+   "description": "Drop events at ingestion time based on event metadata.",
+   "example": "Filter unwanted events before they enter your project."
+  },
+  {
+   "name": "Event ingestion warnings",
+   "category": "Pipeline",
+   "description": "Find problems encountered while processing your events. Inspect the warnings to identify tracking issues and improve the data you analyze.",
+   "example": "Investigate events that were not ingested as expected."
+  },
+  {
+   "name": "Managed migrations",
+   "category": "Pipeline",
+   "description": "",
+   "example": "Bring historical events into PostHog."
+  },
+  {
+   "name": "Managed viewsets",
+   "category": "Unreleased",
+   "description": "Set up collections of warehouse views built for a particular kind of analysis. Reuse prepared data models instead of starting each query from scratch.",
+   "example": "Set up a collection of warehouse views for analysis."
+  },
+  {
+   "name": "Models",
+   "category": "Tools",
+   "description": "Turn SQL queries into reusable views and materialized views. Build on shared data models instead of repeating the same preparation in every analysis.",
+   "example": "Save a reusable query as a view for other analyses."
+  },
+  {
+   "name": "Property definitions",
+   "category": "Schema",
+   "description": "Explore the properties attached to your events and people. Document their meaning so everyone interprets the same data consistently.",
+   "example": "Check the meaning and format of an event property."
+  },
+  {
+   "name": "Property groups",
+   "category": "Schema",
+   "description": "Organize related properties into reusable groups. Make a large tracking schema easier to navigate and understand.",
+   "example": "Organize related properties so they are easier to find."
+  },
+  {
+   "name": "Revenue definitions",
+   "category": "Schema",
+   "description": "Tell PostHog which events represent revenue and where to find their amounts and currencies. Use consistent revenue measures across your analyses.",
+   "example": "Choose the events and properties that represent revenue."
+  },
+  {
+   "name": "SQL variables",
+   "category": "Schema",
+   "description": "Define reusable values for SQL queries so you can change a shared parameter without editing every query.",
+   "example": "Reuse the same date boundary across several queries."
+  },
+  {
+   "name": "Sources",
+   "category": "Pipeline",
+   "description": "Bring data from your other tools into PostHog. Combine it with product events to answer questions that span your business.",
+   "example": "Connect billing or support data to your product analytics."
+  },
+  {
+   "name": "Transformations",
+   "category": "Pipeline",
+   "description": "Reshape incoming events before they reach your analyses. Keep event names and properties consistent across your tracking.",
+   "example": "Clean or reshape incoming data before you analyze it."
+  },
+  {
+   "name": "Warehouse destinations",
+   "category": "Pipeline",
+   "description": "",
+   "example": "Choose where a warehouse source sends its synced rows."
+  },
+  {
+   "name": "Warehouse properties",
+   "category": "Schema",
+   "description": "",
+   "example": "Add account attributes from a warehouse table to your groups."
+  }
+ ]
+}

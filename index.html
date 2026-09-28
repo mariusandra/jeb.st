@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jeb street · Jev benchmarks</title>
+  <meta name="description" content="jeb street: a playground for Jev-style typed-decision models. Drive your own model through Snake, Tetris, Connect Four, Wordle and more, or hop into someone else's ride.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;900&family=Overpass+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/street.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <header class="banner">
+    <img src="assets/banner.svg" alt="A road running to the horizon under a wide sky; a signpost reads JEB ST and JEV BENCHMARKS, with a yellow warning sign, DECISIONS AHEAD" width="1400" height="480">
+    <div class="banner-copy">
+      <h1><span class="street-name">JEB</span> <span class="street-suffix">ST</span></h1>
+      <p>Jev benchmarks. A playground for typed-decision models: one forward pass per move, probabilities on every option, nothing generated.</p>
+    </div>
+  </header>
+
+  <nav class="strip" id="strip">
+    <a href="#/" data-route="home">Street</a>
+    <a href="#/garage" data-route="garage">Garage</a>
+    <span class="sep"></span>
+    <a href="#/g/snake" data-route="g/snake">Snake</a>
+    <a href="#/g/connect_four" data-route="g/connect_four">Connect Four</a>
+    <a href="#/g/tetris" data-route="g/tetris">Tetris</a>
+    <a href="#/g/2048" data-route="g/2048">2048</a>
+    <a href="#/g/flappy" data-route="g/flappy">Flappy</a>
+    <a href="#/g/breakout" data-route="g/breakout">Breakout</a>
+    <a href="#/g/wordle" data-route="g/wordle">Wordle</a>
+    <a href="#/g/twenty_questions" data-route="g/twenty_questions">20 Questions</a>
+    <span class="sep"></span>
+    <a href="#/text" data-route="text">Text</a>
+    <a href="#/apps" data-route="apps">App picker</a>
+    <a href="#/triage" data-route="triage">HN triage</a>
+    <a href="#/calibration" data-route="calibration">Calibration</a>
+    <span class="sep"></span>
+    <a href="#/runall" data-route="runall" class="yellow">Run all</a>
+    <a href="#/rides" data-route="rides">Rides</a>
+  </nav>
+  <div class="car-strip"><span class="label">Cars</span><span id="car-pills"></span><a href="#/garage" class="small-link">garage →</a></div>
+
+  <main>
+    <!-- street (home) -->
+    <section id="view-home" class="view">
+      <div class="two-lanes">
+        <a class="sign big" href="#/rides"><div class="sign-title">Hop into someone else's car</div><div class="sign-sub">Watch how other models drove: every recorded ride replays turn by turn, with the probabilities the model served and the exact text it saw.</div></a>
+        <a class="sign big yellow" href="#/garage"><div class="sign-title">Bring your own car</div><div class="sign-sub">Point the page at your own model server, or TypeSafe's Jev with your key, and drive. Everything runs in this browser; rides are recorded here and you choose what to share.</div></a>
+      </div>
+      <h2 class="section-title">The strip</h2>
+      <div class="app-grid" id="app-grid"></div>
+      <div class="notice">
+        <b>How it works.</b> Every app builds a text state and a typed question (a Choice with described options, a yes/no Noul, or a Score), posts it to the model's <code>/v1/systemone</code> endpoint straight from your browser, and plays the answer. No server sits in between. Rides you drive are stored in this browser's storage; export them to share. No rankings yet, just the playground and the playbacks.
+      </div>
+    </section>
+
+    <!-- garage -->
+    <section id="view-garage" class="view">
+      <div class="two-col">
+        <div>
+          <h2 class="section-title">Garage</h2>
+          <div id="cars" class="cars"></div>
+          <div class="row gap"><button id="add-car" class="btn yellow">Add a car</button><button id="probe-all" class="btn">Check all</button><button id="reset-cars" class="btn ghost">Reset to defaults</button></div>
+          <form id="car-form" class="panel car-form">
+            <h3 id="car-form-title">Add a car</h3>
+            <label>Name <input id="car-name" required placeholder="my 4B on the GPU box"></label>
+            <label>Kind <select id="car-kind"><option value="systemone">/v1/systemone server (decider, jevk5, imajev, any TypeSafe-compatible endpoint)</option><option value="typesafe">TypeSafe Jev, hosted (needs your API key)</option></select></label>
+            <label>URL <input id="car-url" required placeholder="http://127.0.0.1:8001"></label>
+            <label id="car-model-row">Model alias <input id="car-model" placeholder="jev-latest"></label>
+            <label id="car-key-row">API key <input id="car-key" type="password" autocomplete="off" placeholder="stays in this browser"></label>
+            <label>Note <input id="car-note" placeholder="optional"></label>
+            <div class="row gap"><button type="submit" class="btn yellow">Save</button><button type="button" id="car-cancel" class="btn ghost">Cancel</button></div>
+          </form>
+        </div>
+        <div class="panel notice tall">
+          <h3>Bringing your own car</h3>
+          <p>A car is any server that speaks TypeSafe's <code>POST /v1/systemone</code>: <a href="https://github.com/Mapika/decider" target="_blank" rel="noopener">decider</a>, <a href="https://github.com/allebee/jevk5" target="_blank" rel="noopener">JevK5</a>, <a href="https://github.com/mohit67890/imajev" target="_blank" rel="noopener">imajev</a>, or TypeSafe's own Jev with your key.</p>
+          <p><b>The browser talks to it directly</b>, so the server must allow cross-origin requests from this page. Most local servers do not by default. Run the tiny relay that ships with this site next to your server and point the car at it:</p>
+          <pre>python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765</pre>
+          <p>Then add a car with URL <code>http://127.0.0.1:8765</code>. The relay adds the CORS headers and, with <code>--api-key</code>, can hold a TypeSafe key so it never reaches the page.</p>
+          <p><b>Keys and URLs stay in this browser's storage.</b> Nothing about your cars is sent anywhere but to the car itself. Every request to a hosted service is billed to your key.</p>
+          <p><b>Someone else's car</b> is a public endpoint they gave you: paste its URL, same as your own.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- game -->
+    <section id="view-game" class="view">
+      <div class="game-head"><h2 class="section-title" id="game-title">Snake</h2><p class="muted" id="game-blurb"></p></div>
+      <div class="layout">
+        <div class="panel game-panel">
+          <div class="board-wrap"><div id="board" class="board" aria-label="Board"></div></div>
+          <div class="event" id="event"></div>
+          <div class="stats">
+            <div class="stat"><div class="stat-label">Turn</div><div class="stat-value" id="turn">0</div></div>
+            <div class="stat"><div class="stat-label" id="score-label">Score</div><div class="stat-value" id="score">0</div></div>
+            <div class="stat"><div class="stat-label">Move</div><div class="stat-value" id="move">—</div></div>
+            <div class="stat"><div class="stat-label">Decision</div><div class="stat-value" id="latency">— ms</div></div>
+            <div class="stat"><div class="stat-label" id="extra-label"></div><div class="stat-value" id="extra"></div></div>
+          </div>
+          <details class="prompt"><summary>What the model saw this turn</summary><pre id="state-text"></pre><pre id="question-text"></pre></details>
+        </div>
+        <div class="side">
+          <div class="panel controls">
+            <div class="form">
+              <div class="field"><label for="model">Car</label><select id="model" class="big" data-cars="one"></select></div>
+              <div class="field"><label for="seed">Seed (blank = random)</label><input id="seed" type="number" placeholder="random"></div>
+              <div class="field"><label for="max-turns">Max turns</label><input id="max-turns" type="number" min="1" max="2000" value="300"></div>
+              <div class="field" id="opponent-row"><label for="opponent">Other side</label><select id="opponent" class="big" data-cars="opponent"></select></div>
+              <button id="new-game" class="btn yellow wide">New game</button>
+            </div>
+            <div class="toggles" id="options"></div>
+            <div class="button-row"><button id="previous" class="btn" aria-label="Previous turn">←</button><button id="play" class="btn yellow">Play</button><button id="next" class="btn" aria-label="Next turn">→</button></div>
+            <input class="timeline" id="timeline" type="range" min="0" max="0" value="0" aria-label="Replay position">
+            <div class="control-foot"><span><span class="mode" id="mode">—</span> · <span id="position">0 / 0</span></span>
+              <select id="speed" aria-label="Playback speed"><option value="900">1×</option><option value="450">2×</option><option value="225">4×</option><option value="0" selected>as fast as the model</option></select></div>
+          </div>
+          <div class="panel decision">
+            <div class="decision-head"><h3>Model decision</h3></div>
+            <div id="probabilities"></div>
+            <div class="confidence" id="confidence"></div>
+            <div class="override-note" id="override-note"></div>
+          </div>
+          <div class="panel result" id="result"></div>
+          <div class="panel rides">
+            <div class="decision-head"><h3>Rides</h3><div class="muted small" id="rides-count"></div></div>
+            <div class="list" id="ride-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- text decisions -->
+    <section id="view-text" class="view">
+      <h2 class="section-title">Text decisions</h2>
+      <div class="two-col">
+        <div class="side">
+          <div class="panel editor">
+            <div class="form">
+              <div class="field"><label for="preset">Preset</label><select id="preset" class="big"></select></div>
+              <div class="field"><label for="text-model">Car</label><select id="text-model" class="big" data-cars="all"></select></div>
+            </div>
+            <div class="field"><label for="state">State (the text the model reads)</label><textarea id="state" rows="9" spellcheck="false"></textarea></div>
+            <div class="field"><label for="questions">Typed questions (JSON: choice with described options, score with ordered levels, noul for yes/no)</label><textarea id="questions" rows="14" spellcheck="false"></textarea></div>
+            <div class="row gap"><button id="ask" class="btn yellow">Ask</button><div class="muted small" id="ask-status">One request per car; every question is answered from the same forward pass.</div></div>
+          </div>
+          <div class="panel rides"><div class="decision-head"><h3>History</h3></div><div class="list" id="ask-list"></div></div>
+        </div>
+        <div class="panel decision"><div class="decision-head"><h3>Answers</h3></div><div class="results" id="results"><div class="muted small">Pick a preset or write your own state and questions, then press Ask.</div></div></div>
+      </div>
+    </section>
+
+    <!-- app picker -->
+    <section id="view-apps" class="view">
+      <h2 class="section-title">App picker</h2>
+      <div class="two-col narrow-left">
+        <div class="panel editor">
+          <div class="field"><label for="apps-model">Car</label><select id="apps-model" class="big" data-cars="one"></select></div>
+          <div class="field"><label for="apps-query">Filter by jev</label><textarea id="apps-query" rows="3" maxlength="2000" placeholder="Tell us what you want to use PostHog for, and we'll suggest apps to use."></textarea></div>
+          <div class="examples"><span class="muted small">For example</span><span id="apps-examples"></span></div>
+          <div class="muted small mono" id="apps-status"></div>
+          <div class="notice small">The setup of <a href="https://github.com/PostHog/posthog/pull/106730" target="_blank" rel="noopener">PostHog pull request 106730</a>: every app in the catalog is one yes/no question ("Would this PostHog app help with the user's goal? … App: name. Category. Description. Example."), batched 32 per request, with your text as the state. Apps whose probability of yes is at least 0.5 are matching; the rest stay selectable below. Stars are kept in this browser only.</div>
+        </div>
+        <div class="panel decision"><div class="decision-head"><h3 id="apps-title">All apps</h3><div class="muted small" id="apps-count"></div></div><div class="app-groups" id="app-groups"></div></div>
+      </div>
+    </section>
+
+    <!-- HN triage -->
+    <section id="view-triage" class="view">
+      <h2 class="section-title">HN triage</h2>
+      <div class="two-col narrow-left">
+        <div class="panel editor">
+          <div class="field"><label for="triage-model">Car</label><select id="triage-model" class="big" data-cars="one"></select></div>
+          <div class="row gap"><button id="triage-poll" class="btn yellow">Fetch new stories</button><label class="inline"><input type="checkbox" id="triage-auto" checked> auto every 20 s</label></div>
+          <div class="slider"><span class="small">route to review when the topic's top probability is under</span><input type="range" id="triage-threshold" min="0.3" max="0.9" step="0.05" value="0.55"><b id="triage-threshold-value">0.55</b></div>
+          <div class="muted small mono" id="triage-status"></div>
+          <div class="notice small">Every new Hacker News submission (public API, read straight from your browser) is one request with four typed questions answered from the same forward pass: topic (8 options), kind (6 options), front-page appeal (yes/no) and technicality (3 levels). A topic probability under the threshold sends the story to the review lane instead of auto-filing it. The feed lives only for this page visit.</div>
+          <div class="row gap"><button id="triage-reset" class="btn ghost">Clear the feed</button></div>
+          <div id="triage-topics"></div>
+        </div>
+        <div class="panel decision"><div class="decision-head"><h3>Newest submissions</h3><div class="muted small" id="triage-count"></div></div><div class="stories" id="stories"></div></div>
+      </div>
+    </section>
+
+    <!-- calibration -->
+    <section id="view-calibration" class="view">
+      <h2 class="section-title">Calibration</h2>
+      <div class="two-col narrow-left">
+        <div class="panel editor">
+          <div class="form">
+            <div class="field"><label for="calib-game">Game</label><select id="calib-game" class="big"><option value="">all games</option></select></div>
+            <div class="field"><label for="calib-model">Car</label><select id="calib-model" class="big"><option value="">all cars</option></select></div>
+          </div>
+          <div class="slider"><span class="small">hindsight horizon</span><input type="range" id="calib-horizon" min="1" max="40" step="1" value="10"><b id="calib-horizon-value">10</b> <span class="small">decisions</span></div>
+          <div class="stats kpis" id="calib-kpis"></div>
+          <div class="notice small">Every recorded decision carries the probability the model put on the move it played. <b>Hindsight</b> buckets those probabilities and shows how often the game did not end badly (crash, loss, game over) within the horizon: a survival curve that should rise with confidence. <b>Forced moves</b> (Connect Four) is real correctness: positions with an immediate win or a forced block, and whether the model played one; its gap to the diagonal is the calibration error. Bars behind the curves are how many decisions fell in each bucket. Computed over the bundled rides plus yours, in this browser.</div>
+        </div>
+        <div class="panel decision"><div class="decision-head"><h3>Reliability diagram</h3><div class="muted small mono" id="calib-status"></div></div><div class="chart" id="calib-chart"><div class="tip" id="calib-tip"></div></div><div class="legend" id="calib-legend"></div></div>
+      </div>
+    </section>
+
+    <!-- run all -->
+    <section id="view-runall" class="view">
+      <h2 class="section-title">Run all</h2>
+      <div class="two-col narrow-left">
+        <div class="side">
+          <div class="panel editor">
+            <div class="field"><label for="runall-model">Car</label><select id="runall-model" class="big" data-cars="one"></select></div>
+            <div class="row gap"><button id="runall-start" class="btn yellow">Run everything</button><button id="runall-stop" class="btn ghost" disabled>Stop</button></div>
+            <div class="progress"><div class="progress-fill" id="runall-progress"></div></div>
+            <div class="muted small mono" id="runall-status">idle</div>
+            <div class="notice small">The plan, in order:<ul id="runall-plan"></ul>Every game is recorded as a ride under your car. The scorecard is saved in this browser and can be exported with its rides. No leaderboard yet; this is the thing you will submit once there is one.</div>
+          </div>
+          <div class="panel game-panel"><div class="board-wrap"><div id="runall-board" class="board" aria-label="Live board"></div></div><div class="muted small mono" id="runall-live"></div></div>
+        </div>
+        <div class="side">
+          <div class="panel decision" id="runall-result"></div>
+          <div class="panel decision"><div class="decision-head"><h3>Previous runs</h3></div><div id="runs"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- rides -->
+    <section id="view-rides" class="view">
+      <h2 class="section-title">Rides</h2>
+      <div class="panel editor">
+        <div class="row gap wrap"><select id="rides-filter" class="big auto"><option value="all">everyone's rides</option><option value="you">yours</option><option value="bundled">someone else's</option></select><span class="muted small" id="rides-summary"></span><span class="grow"></span><label class="btn ghost file">Import a ride or run JSON <input type="file" id="import-ride" accept="application/json" hidden></label></div>
+        <div class="list tall" id="all-rides"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>jeb street · a playground for typed-decision models · static, client-side, nothing leaves your browser but your own requests</span><span><a href="https://github.com/Mapika/decider" target="_blank" rel="noopener">decider</a> · <a href="https://github.com/allebee/jevk5" target="_blank" rel="noopener">JevK5</a> · <a href="https://github.com/mohit67890/imajev" target="_blank" rel="noopener">imajev</a> · <a href="https://docs.typesafe.ai/" target="_blank" rel="noopener">TypeSafe</a></span></footer>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

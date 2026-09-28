@@ -1,0 +1,1650 @@
+[
+ {
+  "id": "2048-20260927-185429-ebe2dd",
+  "game": "2048",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 269764,
+  "turns": 270,
+  "score": 3248,
+  "score_label": "score",
+  "status": "no_moves",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.94,
+  "created_at": "2026-09-27T18:54:29.765867+00:00",
+  "file": "2048-20260927-185429-ebe2dd.json"
+ },
+ {
+  "id": "2048-20260927-185517-691368",
+  "game": "2048",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 317287,
+  "turns": 263,
+  "score": 3180,
+  "score_label": "score",
+  "status": "no_moves",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 826.03,
+  "created_at": "2026-09-27T18:55:17.288302+00:00",
+  "file": "2048-20260927-185517-691368.json"
+ },
+ {
+  "id": "2048-20260926-000833-ad0957",
+  "game": "2048",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 313686,
+  "turns": 187,
+  "score": 2304,
+  "score_label": "score",
+  "status": "playing",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.13,
+  "created_at": "2026-09-26T00:08:33.687029+00:00",
+  "file": "2048-20260926-000833-ad0957.json"
+ },
+ {
+  "id": "2048-20260926-000330-7ec360",
+  "game": "2048",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 10225,
+  "turns": 207,
+  "score": 2064,
+  "score_label": "score",
+  "status": "no_moves",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.56,
+  "created_at": "2026-09-26T00:03:30.226853+00:00",
+  "file": "2048-20260926-000330-7ec360.json"
+ },
+ {
+  "id": "2048-20260927-185329-07fe64",
+  "game": "2048",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 209985,
+  "turns": 158,
+  "score": 1524,
+  "score_label": "score",
+  "status": "no_moves",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 287.99,
+  "created_at": "2026-09-27T18:53:29.986785+00:00",
+  "file": "2048-20260927-185329-07fe64.json"
+ },
+ {
+  "id": "2048-20260926-000415-4fdfa6",
+  "game": "2048",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 55559,
+  "turns": 162,
+  "score": 1516,
+  "score_label": "score",
+  "status": "no_moves",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 496.13,
+  "created_at": "2026-09-26T00:04:15.560193+00:00",
+  "file": "2048-20260926-000415-4fdfa6.json"
+ },
+ {
+  "id": "2048-20260926-000155-38cc78",
+  "game": "2048",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 915909,
+  "turns": 29,
+  "score": 184,
+  "score_label": "score",
+  "status": "playing",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 482.81,
+  "created_at": "2026-09-26T00:01:55.910157+00:00",
+  "file": "2048-20260926-000155-38cc78.json"
+ },
+ {
+  "id": "2048-20260926-000019-d6e221",
+  "game": "2048",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 3,
+  "turns": 12,
+  "score": 36,
+  "score_label": "score",
+  "status": "turn_limit",
+  "options": {
+   "hint": "consequences"
+  },
+  "overrides": 0,
+  "median_decision_ms": 463.89,
+  "created_at": "2026-09-26T00:00:19.536104+00:00",
+  "file": "2048-20260926-000019-d6e221.json"
+ },
+ {
+  "id": "breakout-20260927-215908-1666e2",
+  "game": "breakout",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 348600,
+  "turns": 48,
+  "score": 1,
+  "score_label": "bricks",
+  "status": "playing",
+  "options": {
+   "ticks_per_decision": 1,
+   "hint": true,
+   "paddle_speed": "normal"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.6,
+  "created_at": "2026-09-27T21:59:08.601195+00:00",
+  "file": "breakout-20260927-215908-1666e2.json"
+ },
+ {
+  "id": "breakout-20260927-222026-ab2305",
+  "game": "breakout",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 626720,
+  "turns": 26,
+  "score": 1,
+  "score_label": "bricks",
+  "status": "playing",
+  "options": {
+   "ticks_per_decision": 1,
+   "hint": true,
+   "paddle_speed": "normal"
+  },
+  "overrides": 0,
+  "median_decision_ms": 2039.44,
+  "created_at": "2026-09-27T22:20:26.721047+00:00",
+  "file": "breakout-20260927-222026-ab2305.json"
+ },
+ {
+  "id": "connect_four-20260926-000014-21d5ed",
+  "game": "connect_four",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 3,
+  "turns": 9,
+  "score": 1.0,
+  "score_label": "result",
+  "status": "win",
+  "options": {
+   "threats": true,
+   "tactical_mask": false
+  },
+  "overrides": 0,
+  "median_decision_ms": 514.93,
+  "created_at": "2026-09-26T00:00:14.802898+00:00",
+  "file": "connect_four-20260926-000014-21d5ed.json"
+ },
+ {
+  "id": "connect_four-20260927-184827-5f6365",
+  "game": "connect_four",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 907398,
+  "turns": 17,
+  "score": 1.0,
+  "score_label": "result",
+  "status": "win",
+  "options": {
+   "threats": true,
+   "tactical_mask": false
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.97,
+  "created_at": "2026-09-27T18:48:27.398848+00:00",
+  "file": "connect_four-20260927-184827-5f6365.json"
+ },
+ {
+  "id": "connect_four-20260927-184832-001e35",
+  "game": "connect_four",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 912695,
+  "turns": 8,
+  "score": 1.0,
+  "score_label": "result",
+  "status": "win",
+  "options": {
+   "threats": true,
+   "tactical_mask": false
+  },
+  "overrides": 0,
+  "median_decision_ms": 277.23,
+  "created_at": "2026-09-27T18:48:32.696214+00:00",
+  "file": "connect_four-20260927-184832-001e35.json"
+ },
+ {
+  "id": "connect_four-20260926-000136-fb4ee2",
+  "game": "connect_four",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 896695,
+  "turns": 16,
+  "score": 0.0,
+  "score_label": "result",
+  "status": "loss",
+  "options": {
+   "threats": true,
+   "tactical_mask": false
+  },
+  "overrides": 0,
+  "median_decision_ms": 533.45,
+  "created_at": "2026-09-26T00:01:36.697178+00:00",
+  "file": "connect_four-20260926-000136-fb4ee2.json"
+ },
+ {
+  "id": "connect_four-20260927-184819-ef33f8",
+  "game": "connect_four",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 899569,
+  "turns": 15,
+  "score": 0.0,
+  "score_label": "result",
+  "status": "loss",
+  "options": {
+   "threats": true,
+   "tactical_mask": false
+  },
+  "overrides": 0,
+  "median_decision_ms": 265.45,
+  "created_at": "2026-09-27T18:48:19.570270+00:00",
+  "file": "connect_four-20260927-184819-ef33f8.json"
+ },
+ {
+  "id": "connect_four-20260927-215521-563b99",
+  "game": "connect_four",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 5,
+  "turns": 6,
+  "score": 0,
+  "score_label": "result",
+  "status": "playing",
+  "options": {
+   "threats": true,
+   "tactical_mask": false
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.17,
+  "created_at": "2026-09-27T21:55:21.575088+00:00",
+  "file": "connect_four-20260927-215521-563b99.json"
+ },
+ {
+  "id": "flappy-20260927-215425-60ca6b",
+  "game": "flappy",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 3,
+  "turns": 40,
+  "score": 0,
+  "score_label": "pipes",
+  "status": "turn_limit",
+  "options": {
+   "ticks_per_decision": 1,
+   "hint": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 113.1,
+  "created_at": "2026-09-27T21:54:25.275361+00:00",
+  "file": "flappy-20260927-215425-60ca6b.json"
+ },
+ {
+  "id": "flappy-20260927-215847-4e4aff",
+  "game": "flappy",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 327218,
+  "turns": 61,
+  "score": 0,
+  "score_label": "pipes",
+  "status": "crash",
+  "options": {
+   "ticks_per_decision": 1,
+   "hint": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.4,
+  "created_at": "2026-09-27T21:58:47.218242+00:00",
+  "file": "flappy-20260927-215847-4e4aff.json"
+ },
+ {
+  "id": "flappy-20260927-221820-059001",
+  "game": "flappy",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 500921,
+  "turns": 61,
+  "score": 0,
+  "score_label": "pipes",
+  "status": "crash",
+  "options": {
+   "ticks_per_decision": 1,
+   "hint": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 1991.46,
+  "created_at": "2026-09-27T22:18:20.921209+00:00",
+  "file": "flappy-20260927-221820-059001.json"
+ },
+ {
+  "id": "snake-20260925-221625-174664",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 585088,
+  "turns": 300,
+  "score": 30,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 10,
+  "median_decision_ms": 903.88,
+  "created_at": "2026-09-25T22:16:25.093951+00:00",
+  "file": "snake-20260925-221625-174664.json"
+ },
+ {
+  "id": "snake-20260925-222422-ae1543",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 62093,
+  "turns": 302,
+  "score": 26,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 20,
+  "median_decision_ms": 116.7,
+  "created_at": "2026-09-25T22:24:22.093659+00:00",
+  "file": "snake-20260925-222422-ae1543.json"
+ },
+ {
+  "id": "snake-20260925-230038-b00228",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 238357,
+  "turns": 300,
+  "score": 26,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 4,
+  "median_decision_ms": 1025.14,
+  "created_at": "2026-09-25T23:00:38.358944+00:00",
+  "file": "snake-20260925-230038-b00228.json"
+ },
+ {
+  "id": "snake-20260926-135246-206f09",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 766384,
+  "turns": 247,
+  "score": 26,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 597.89,
+  "created_at": "2026-09-26T13:52:46.385517+00:00",
+  "file": "snake-20260926-135246-206f09.json"
+ },
+ {
+  "id": "snake-20260925-225248-eff3d4",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 768751,
+  "turns": 300,
+  "score": 25,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 22,
+  "median_decision_ms": 116.4,
+  "created_at": "2026-09-25T22:52:48.751370+00:00",
+  "file": "snake-20260925-225248-eff3d4.json"
+ },
+ {
+  "id": "snake-20260928-093216-1af1c7",
+  "game": "snake",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 936513,
+  "turns": 188,
+  "score": 23,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 273.64,
+  "created_at": "2026-09-28T09:32:16.520204+00:00",
+  "file": "snake-20260928-093216-1af1c7.json"
+ },
+ {
+  "id": "snake-20260925-211732-17852a",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 52180,
+  "turns": 300,
+  "score": 21,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 23,
+  "median_decision_ms": 553.63,
+  "created_at": "2026-09-25T21:17:32.181066+00:00",
+  "file": "snake-20260925-211732-17852a.json"
+ },
+ {
+  "id": "snake-20260925-225350-da7503",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 830764,
+  "turns": 300,
+  "score": 18,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 17,
+  "median_decision_ms": 115.24,
+  "created_at": "2026-09-25T22:53:50.764088+00:00",
+  "file": "snake-20260925-225350-da7503.json"
+ },
+ {
+  "id": "snake-20260925-192547-092716",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 347127,
+  "turns": 220,
+  "score": 14,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "safety",
+   "legality_mask": "step",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 673.57,
+  "created_at": "2026-09-25T19:25:47.127700+00:00",
+  "file": "snake-20260925-192547-092716.json"
+ },
+ {
+  "id": "initial-seed-0",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 0,
+  "turns": 300,
+  "score": 12,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 567.18,
+  "created_at": "2026-09-25T00:00:00+00:00",
+  "file": "initial-seed-0.json"
+ },
+ {
+  "id": "snake-20260927-184330-676c08",
+  "game": "snake",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 610038,
+  "turns": 91,
+  "score": 11,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 272.71,
+  "created_at": "2026-09-27T18:43:30.038387+00:00",
+  "file": "snake-20260927-184330-676c08.json"
+ },
+ {
+  "id": "snake-20260927-184742-08f4ec",
+  "game": "snake",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 862527,
+  "turns": 69,
+  "score": 11,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 278.36,
+  "created_at": "2026-09-27T18:47:42.529284+00:00",
+  "file": "snake-20260927-184742-08f4ec.json"
+ },
+ {
+  "id": "snake-20260927-181005-fd51a3",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 605008,
+  "turns": 94,
+  "score": 10,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.63,
+  "created_at": "2026-09-27T18:10:05.010222+00:00",
+  "file": "snake-20260927-181005-fd51a3.json"
+ },
+ {
+  "id": "snake-20260925-192413-12eea0",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 722162,
+  "turns": 120,
+  "score": 9,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "none",
+   "legality_mask": "step",
+   "decision": "argmax"
+  },
+  "overrides": 1,
+  "median_decision_ms": 576.74,
+  "created_at": "2026-09-25T19:24:13.332058+00:00",
+  "file": "snake-20260925-192413-12eea0.json"
+ },
+ {
+  "id": "snake-20260927-184642-fd60ad",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 802382,
+  "turns": 79,
+  "score": 9,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 650.52,
+  "created_at": "2026-09-27T18:46:42.383350+00:00",
+  "file": "snake-20260927-184642-fd60ad.json"
+ },
+ {
+  "id": "snake-20260925-191335-ce14b2",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 615703,
+  "turns": 73,
+  "score": 7,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 643.99,
+  "created_at": "2026-09-25T19:13:35.704138+00:00",
+  "file": "snake-20260925-191335-ce14b2.json"
+ },
+ {
+  "id": "snake-20260925-191522-305393",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 722162,
+  "turns": 100,
+  "score": 7,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 549.15,
+  "created_at": "2026-09-25T19:15:22.162243+00:00",
+  "file": "snake-20260925-191522-305393.json"
+ },
+ {
+  "id": "snake-20260925-192210-0791c0",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 722162,
+  "turns": 100,
+  "score": 7,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 547.53,
+  "created_at": "2026-09-25T19:22:10.611873+00:00",
+  "file": "snake-20260925-192210-0791c0.json"
+ },
+ {
+  "id": "snake-20260926-135157-eb603c",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 717530,
+  "turns": 54,
+  "score": 7,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 530.76,
+  "created_at": "2026-09-26T13:51:57.531942+00:00",
+  "file": "snake-20260926-135157-eb603c.json"
+ },
+ {
+  "id": "snake-20260927-222357-13c662",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 837102,
+  "turns": 76,
+  "score": 7,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 554.87,
+  "created_at": "2026-09-27T22:23:57.102602+00:00",
+  "file": "snake-20260927-222357-13c662.json"
+ },
+ {
+  "id": "snake-20260927-184626-505f84",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 786581,
+  "turns": 49,
+  "score": 6,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "consequences",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.89,
+  "created_at": "2026-09-27T18:46:26.582345+00:00",
+  "file": "snake-20260927-184626-505f84.json"
+ },
+ {
+  "id": "snake-20260928-075944-897ac6",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 384864,
+  "turns": 28,
+  "score": 6,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 556.55,
+  "created_at": "2026-09-28T07:59:44.865320+00:00",
+  "file": "snake-20260928-075944-897ac6.json"
+ },
+ {
+  "id": "snake-20260928-094156-fc9401",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 516105,
+  "turns": 36,
+  "score": 6,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 114.83,
+  "created_at": "2026-09-28T09:41:56.105742+00:00",
+  "file": "snake-20260928-094156-fc9401.json"
+ },
+ {
+  "id": "snake-20260927-184558-ff25c7",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 758761,
+  "turns": 49,
+  "score": 5,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.9,
+  "created_at": "2026-09-27T18:45:58.762461+00:00",
+  "file": "snake-20260927-184558-ff25c7.json"
+ },
+ {
+  "id": "snake-20260928-094124-a4fb39",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 484049,
+  "turns": 56,
+  "score": 5,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.68,
+  "created_at": "2026-09-28T09:41:24.063416+00:00",
+  "file": "snake-20260928-094124-a4fb39.json"
+ },
+ {
+  "id": "snake-20260928-094250-7fa646",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 570622,
+  "turns": 32,
+  "score": 5,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 554.1,
+  "created_at": "2026-09-28T09:42:50.628157+00:00",
+  "file": "snake-20260928-094250-7fa646.json"
+ },
+ {
+  "id": "snake-20260925-190850-5a14c0",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 7,
+  "turns": 40,
+  "score": 4,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 546.59,
+  "created_at": "2026-09-25T19:08:50.265242+00:00",
+  "file": "snake-20260925-190850-5a14c0.json"
+ },
+ {
+  "id": "snake-20260927-184615-864f4c",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 775757,
+  "turns": 38,
+  "score": 4,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 118.29,
+  "created_at": "2026-09-27T18:46:15.757388+00:00",
+  "file": "snake-20260927-184615-864f4c.json"
+ },
+ {
+  "id": "snake-20260928-080717-c5f6cb",
+  "game": "snake",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 837846,
+  "turns": 26,
+  "score": 4,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 330.51,
+  "created_at": "2026-09-28T08:07:17.846192+00:00",
+  "file": "snake-20260928-080717-c5f6cb.json"
+ },
+ {
+  "id": "snake-20260926-135720-2e4419",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 40303,
+  "turns": 16,
+  "score": 3,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 546.76,
+  "created_at": "2026-09-26T13:57:20.305548+00:00",
+  "file": "snake-20260926-135720-2e4419.json"
+ },
+ {
+  "id": "snake-20260927-184608-e56298",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 768020,
+  "turns": 23,
+  "score": 3,
+  "score_label": "food",
+  "status": "self_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 117.4,
+  "created_at": "2026-09-27T18:46:08.021320+00:00",
+  "file": "snake-20260927-184608-e56298.json"
+ },
+ {
+  "id": "snake-20260925-190912-42d5b6",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 352566,
+  "turns": 12,
+  "score": 2,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 725.47,
+  "created_at": "2026-09-25T19:09:12.566401+00:00",
+  "file": "snake-20260925-190912-42d5b6.json"
+ },
+ {
+  "id": "snake-20260925-230011-8dd041",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 211768,
+  "turns": 16,
+  "score": 2,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 538.03,
+  "created_at": "2026-09-25T23:00:11.769329+00:00",
+  "file": "snake-20260925-230011-8dd041.json"
+ },
+ {
+  "id": "snake-20260928-080546-f7f618",
+  "game": "snake",
+  "model": "imajev-4b local",
+  "device": "mlx",
+  "seed": 746666,
+  "turns": 89,
+  "score": 2,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 601.18,
+  "created_at": "2026-09-28T08:05:46.666530+00:00",
+  "file": "snake-20260928-080546-f7f618.json"
+ },
+ {
+  "id": "snake-20260928-080805-da8107",
+  "game": "snake",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 885109,
+  "turns": 16,
+  "score": 2,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 285.04,
+  "created_at": "2026-09-28T08:08:05.109643+00:00",
+  "file": "snake-20260928-080805-da8107.json"
+ },
+ {
+  "id": "snake-20260928-094142-8be789",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 502843,
+  "turns": 15,
+  "score": 2,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 115.95,
+  "created_at": "2026-09-28T09:41:42.844203+00:00",
+  "file": "snake-20260928-094142-8be789.json"
+ },
+ {
+  "id": "snake-20260926-000032-666bf0",
+  "game": "snake",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 3,
+  "turns": 8,
+  "score": 1,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 512.5,
+  "created_at": "2026-09-26T00:00:32.732299+00:00",
+  "file": "snake-20260926-000032-666bf0.json"
+ },
+ {
+  "id": "snake-20260928-080519-58dafa",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 719078,
+  "turns": 8,
+  "score": 1,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 61.97,
+  "created_at": "2026-09-28T08:05:19.078468+00:00",
+  "file": "snake-20260928-080519-58dafa.json"
+ },
+ {
+  "id": "snake-20260928-093008-95ca5c",
+  "game": "snake",
+  "model": "jevk5-4b-v0.3-Q8_0",
+  "device": "metal",
+  "seed": 808231,
+  "turns": 99,
+  "score": 1,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 585.77,
+  "created_at": "2026-09-28T09:30:08.232160+00:00",
+  "file": "snake-20260928-093008-95ca5c.json"
+ },
+ {
+  "id": "snake-20260925-192306-6767ff",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 722162,
+  "turns": 120,
+  "score": 0,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "safety",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 555.95,
+  "created_at": "2026-09-25T19:23:06.302258+00:00",
+  "file": "snake-20260925-192306-6767ff.json"
+ },
+ {
+  "id": "snake-20260925-192523-99417d",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 722162,
+  "turns": 120,
+  "score": 0,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "safety",
+   "legality_mask": "step",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 663.35,
+  "created_at": "2026-09-25T19:25:23.760522+00:00",
+  "file": "snake-20260925-192523-99417d.json"
+ },
+ {
+  "id": "snake-20260925-202009-32e6d3",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 5,
+  "turns": 6,
+  "score": 0,
+  "score_label": "food",
+  "status": "turn_limit",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 7001.97,
+  "created_at": "2026-09-25T20:20:09.698181+00:00",
+  "file": "snake-20260925-202009-32e6d3.json"
+ },
+ {
+  "id": "snake-20260925-222327-b777a6",
+  "game": "snake",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 7406,
+  "turns": 181,
+  "score": 0,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "dangers",
+   "legality_mask": "space",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 116.75,
+  "created_at": "2026-09-25T22:23:27.406842+00:00",
+  "file": "snake-20260925-222327-b777a6.json"
+ },
+ {
+  "id": "snake-20260928-080443-1f1942",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 683155,
+  "turns": 9,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 62.55,
+  "created_at": "2026-09-28T08:04:43.155294+00:00",
+  "file": "snake-20260928-080443-1f1942.json"
+ },
+ {
+  "id": "snake-20260928-080511-1e67ac",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 711748,
+  "turns": 10,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 63.18,
+  "created_at": "2026-09-28T08:05:11.748630+00:00",
+  "file": "snake-20260928-080511-1e67ac.json"
+ },
+ {
+  "id": "snake-20260928-080511-771a0d",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 711050,
+  "turns": 6,
+  "score": 0,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 68.15,
+  "created_at": "2026-09-28T08:05:11.050198+00:00",
+  "file": "snake-20260928-080511-771a0d.json"
+ },
+ {
+  "id": "snake-20260928-080514-6f97bf",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 714012,
+  "turns": 10,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 65.07,
+  "created_at": "2026-09-28T08:05:14.012890+00:00",
+  "file": "snake-20260928-080514-6f97bf.json"
+ },
+ {
+  "id": "snake-20260928-080516-f2874b",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 716715,
+  "turns": 10,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 62.28,
+  "created_at": "2026-09-28T08:05:16.716277+00:00",
+  "file": "snake-20260928-080516-f2874b.json"
+ },
+ {
+  "id": "snake-20260928-080526-074844",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 726923,
+  "turns": 10,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 64.87,
+  "created_at": "2026-09-28T08:05:26.923390+00:00",
+  "file": "snake-20260928-080526-074844.json"
+ },
+ {
+  "id": "snake-20260928-080530-20d38b",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 730209,
+  "turns": 7,
+  "score": 0,
+  "score_label": "food",
+  "status": "playing",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 68.97,
+  "created_at": "2026-09-28T08:05:30.209337+00:00",
+  "file": "snake-20260928-080530-20d38b.json"
+ },
+ {
+  "id": "snake-20260928-080701-3b2f78",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 821881,
+  "turns": 10,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 61.55,
+  "created_at": "2026-09-28T08:07:01.881366+00:00",
+  "file": "snake-20260928-080701-3b2f78.json"
+ },
+ {
+  "id": "snake-20260928-080707-53a4a0",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 827160,
+  "turns": 9,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 62.81,
+  "created_at": "2026-09-28T08:07:07.160836+00:00",
+  "file": "snake-20260928-080707-53a4a0.json"
+ },
+ {
+  "id": "snake-20260928-080709-7e0201",
+  "game": "snake",
+  "model": "imajev-2b on the 3080 box",
+  "device": "cuda",
+  "seed": 829731,
+  "turns": 9,
+  "score": 0,
+  "score_label": "food",
+  "status": "wall_collision",
+  "options": {
+   "hint": "none",
+   "legality_mask": "none",
+   "decision": "argmax"
+  },
+  "overrides": 0,
+  "median_decision_ms": 62.65,
+  "created_at": "2026-09-28T08:07:09.732059+00:00",
+  "file": "snake-20260928-080709-7e0201.json"
+ },
+ {
+  "id": "tetris-20260927-184840-b51ca9",
+  "game": "tetris",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 920903,
+  "turns": 300,
+  "score": 110,
+  "score_label": "lines",
+  "status": "turn_limit",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 279.84,
+  "created_at": "2026-09-27T18:48:40.905185+00:00",
+  "file": "tetris-20260927-184840-b51ca9.json"
+ },
+ {
+  "id": "tetris-20260926-000036-c219ee",
+  "game": "tetris",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 4,
+  "turns": 60,
+  "score": 22,
+  "score_label": "lines",
+  "status": "turn_limit",
+  "options": {
+   "shortlist": 8,
+   "player": "heuristic",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": null,
+  "created_at": "2026-09-26T00:00:36.841801+00:00",
+  "file": "tetris-20260926-000036-c219ee.json"
+ },
+ {
+  "id": "tetris-20260926-000618-f74d5e",
+  "game": "tetris",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 178256,
+  "turns": 50,
+  "score": 8,
+  "score_label": "lines",
+  "status": "playing",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 2461.4,
+  "created_at": "2026-09-26T00:06:18.258636+00:00",
+  "file": "tetris-20260926-000618-f74d5e.json"
+ },
+ {
+  "id": "tetris-20260926-000548-1d569f",
+  "game": "tetris",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 148894,
+  "turns": 51,
+  "score": 7,
+  "score_label": "lines",
+  "status": "topped_out",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 373.15,
+  "created_at": "2026-09-26T00:05:48.898261+00:00",
+  "file": "tetris-20260926-000548-1d569f.json"
+ },
+ {
+  "id": "tetris-20260927-185051-9db888",
+  "game": "tetris",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 51178,
+  "turns": 53,
+  "score": 7,
+  "score_label": "lines",
+  "status": "playing",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 2689.63,
+  "created_at": "2026-09-27T18:50:51.181782+00:00",
+  "file": "tetris-20260927-185051-9db888.json"
+ },
+ {
+  "id": "tetris-20260927-185030-b60dda",
+  "game": "tetris",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 30137,
+  "turns": 37,
+  "score": 3,
+  "score_label": "lines",
+  "status": "topped_out",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 378.68,
+  "created_at": "2026-09-27T18:50:30.140163+00:00",
+  "file": "tetris-20260927-185030-b60dda.json"
+ },
+ {
+  "id": "tetris-20260926-000101-d76ef2",
+  "game": "tetris",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 861587,
+  "turns": 15,
+  "score": 1,
+  "score_label": "lines",
+  "status": "playing",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 1644.99,
+  "created_at": "2026-09-26T00:01:01.589065+00:00",
+  "file": "tetris-20260926-000101-d76ef2.json"
+ },
+ {
+  "id": "tetris-20260926-000025-36f3b0",
+  "game": "tetris",
+  "model": "decider-35b Q4_K_M",
+  "device": "metal",
+  "seed": 3,
+  "turns": 6,
+  "score": 0,
+  "score_label": "lines",
+  "status": "turn_limit",
+  "options": {
+   "shortlist": 8,
+   "player": "model",
+   "show_board_after": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 1308.3,
+  "created_at": "2026-09-26T00:00:25.057668+00:00",
+  "file": "tetris-20260926-000025-36f3b0.json"
+ },
+ {
+  "id": "twenty_questions-20260927-221017-0d4ced",
+  "game": "twenty_questions",
+  "model": "decider-4b v2",
+  "device": "cuda",
+  "seed": 7,
+  "turns": 5,
+  "score": 0,
+  "score_label": "questions",
+  "status": "loss",
+  "options": {
+   "assist": "none"
+  },
+  "overrides": 0,
+  "median_decision_ms": 190.45,
+  "created_at": "2026-09-27T22:10:17.355736+00:00",
+  "file": "twenty_questions-20260927-221017-0d4ced.json"
+ },
+ {
+  "id": "twenty_questions-20260927-221327-fa3f7e",
+  "game": "twenty_questions",
+  "model": "decider-4b v2",
+  "device": "mps",
+  "seed": 207339,
+  "turns": 5,
+  "score": 0,
+  "score_label": "questions",
+  "status": "loss",
+  "options": {
+   "assist": "none"
+  },
+  "overrides": 0,
+  "median_decision_ms": 1406.11,
+  "created_at": "2026-09-27T22:13:27.339158+00:00",
+  "file": "twenty_questions-20260927-221327-fa3f7e.json"
+ },
+ {
+  "id": "twenty_questions-20260927-221422-7fb4b7",
+  "game": "twenty_questions",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 262743,
+  "turns": 5,
+  "score": 0,
+  "score_label": "questions",
+  "status": "loss",
+  "options": {
+   "assist": "none"
+  },
+  "overrides": 0,
+  "median_decision_ms": 293.0,
+  "created_at": "2026-09-27T22:14:22.743458+00:00",
+  "file": "twenty_questions-20260927-221422-7fb4b7.json"
+ },
+ {
+  "id": "wordle-20260927-221209-f99b29",
+  "game": "wordle",
+  "model": "jev-latest",
+  "device": "cloud",
+  "seed": 129422,
+  "turns": 5,
+  "score": 5,
+  "score_label": "guesses",
+  "status": "win",
+  "options": {
+   "max_options": 30,
+   "show_constraints": true
+  },
+  "overrides": 0,
+  "median_decision_ms": 277.69,
+  "created_at": "2026-09-27T22:12:09.422480+00:00",
+  "file": "wordle-20260927-221209-f99b29.json"
+ }
+]
