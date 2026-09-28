@@ -145,20 +145,20 @@ function askDriver() {
 }
 async function submitCurrentRide(button) {
   if (!ride || ride.source === "bundled" || ride.source === "community") return;
-  if (ride.status === "playing") { button.textContent = "finish the ride first"; return; }
+  if (ride.status === "playing") { button.textContent = "wait for the ride to end"; return; }
   const name = askDriver(); if (!name) return;
-  button.disabled = true; button.textContent = "submitting…";
+  button.disabled = true; button.textContent = "sharing…";
   try { const r = await community.submitRide(ride, name); ride.submitted_id = r.id; ride.shared = true; await putRide(ride); communityCache.at = 0; renderFrame(); renderRideList(); }
-  catch (e) { button.disabled = false; button.textContent = `submit failed: ${e.message.slice(0, 60)}`; }
+  catch (e) { button.disabled = false; button.textContent = `sharing failed: ${e.message.slice(0, 60)}`; }
 }
 async function submitRun(run, button) {
   const name = askDriver(); if (!name) return;
-  button.disabled = true; button.textContent = "submitting…";
+  button.disabled = true; button.textContent = "sharing…";
   try {
     const rides = (await Promise.all((run.rides || []).map(id => getRide(id)))).filter(Boolean);
     const r = await community.submitRun(run, rides, name); run.submitted_id = r.id; await putRun(run); communityCache.at = 0;
-    button.textContent = "submitted ✓"; renderRuns(); renderCommunityRuns();
-  } catch (e) { button.disabled = false; button.textContent = `submit failed: ${e.message.slice(0, 60)}`; }
+    button.textContent = "shared with everyone ✓"; renderRuns(); renderCommunityRuns();
+  } catch (e) { button.disabled = false; button.textContent = `sharing failed: ${e.message.slice(0, 60)}`; }
 }
 async function openRide(id) {
   const r = await loadRideById(id); if (!r) return;
@@ -216,7 +216,10 @@ function renderFrame() {
   $("result").innerHTML = (finished ? `<strong>${s.score} ${esc(s.score_label || d.scoreLabel)} in ${s.turns} turns</strong>${chips(s)}<br>${fmtStatus(s.status)} · seed ${s.seed} · median ${s.median_decision_ms ?? "—"} ms/decision · ${esc((s.device || "?").toUpperCase())}`
     : `<strong>Live · seed ${s.seed}</strong>${chips(s)}<br>${s.turns} of ${s.max_turns} turns · ${s.score} ${esc(s.score_label || d.scoreLabel)} · median ${s.median_decision_ms ?? "—"} ms/decision`)
     + (s.overrides ? ` · ${s.overrides} override${s.overrides === 1 ? "" : "s"}` : "") + (s.source === "bundled" ? ` · <span class="muted">someone else's ride</span>` : s.source === "community" ? ` · <span class="muted">driven by ${esc(s.driver || "anonymous")}</span>` : "")
-    + `<div class="result-actions"><button class="small-btn" id="export-ride">export JSON</button>${s.source === "you" ? (ride.submitted_id ? `<a class="small-btn" href="#/ride/${esc(ride.submitted_id)}">on the board ✓</a>` : `<button class="small-btn yellow" id="submit-ride">submit to the board</button>`) + `<button class="small-btn danger" id="delete-ride">delete</button>` : ""}${s.source === "community" ? `<span class="small-btn" style="cursor:default">link: #/ride/${esc(s.id)}</span>` : ""}</div>`;
+    + (s.source === "you" ? (ride.submitted_id
+        ? `<div class="share-box shared">Shared with everyone ✓ <a href="#/ride/${esc(ride.submitted_id)}">#/ride/${esc(ride.submitted_id)}</a></div>`
+        : finished ? `<button class="btn yellow share-btn" id="submit-ride">Share this ride with everyone</button>` : `<div class="share-box muted">You can share this ride with everyone once it ends.</div>`) : "")
+    + `<div class="result-actions"><button class="small-btn" id="export-ride">export JSON</button>${s.source === "you" ? `<button class="small-btn danger" id="delete-ride">delete</button>` : ""}${s.source === "community" ? `<span class="small-btn" style="cursor:default">link: #/ride/${esc(s.id)}</span>` : ""}</div>`;
   $("export-ride").addEventListener("click", () => download(`${ride.id}.json`, ride));
   if ($("submit-ride")) $("submit-ride").addEventListener("click", () => submitCurrentRide($("submit-ride")));
   if ($("delete-ride")) $("delete-ride").addEventListener("click", async () => { await deleteRide(ride.id); ride = null; session = null; renderFrame(); renderRideList(); });
@@ -247,7 +250,7 @@ function newGame() {
   catch (e) { $("result").className = "panel result error"; $("result").textContent = e.message; return; }
   ride = session.ride; index = 0; renderFrame(); renderRideList(); play();
 }
-const sourceTag = (s, live) => live ? "LIVE" : s.source === "you" ? (s.submitted_id ? "yours · on the board" : "yours") : s.source === "community" ? `by ${esc(s.driver || "anonymous")}` : "bundled";
+const sourceTag = (s, live) => live ? "LIVE" : s.source === "you" ? (s.submitted_id ? "yours · shared" : "yours") : s.source === "community" ? `by ${esc(s.driver || "anonymous")}` : "bundled";
 async function renderRideList() {
   const all = await allRideSummaries(gameKey); fillModelFilter($("ride-model"), all);
   const rides = filterRides(all, { source: $("ride-source").value, model: $("ride-model").value }); $("rides-count").textContent = `${rides.length} of ${all.length}`;
@@ -320,7 +323,7 @@ async function enterRunAll() { fillCarSelects(); $("runall-plan").innerHTML = PL
 async function renderRuns() {
   let runs = []; try { runs = await listRuns(); } catch {}
   const can = await community.available();
-  $("runs").innerHTML = runs.map(r => `<div class="run-card"><div class="car-head"><b>${esc(r.model)}</b><span class="muted small">${new Date(r.created_at).toLocaleString()}</span><span class="grow"></span>${can ? (r.submitted_id ? `<span class="small-btn" style="cursor:default">on the board ✓</span>` : `<button class="small-btn yellow" data-act="submit" data-id="${esc(r.id)}">submit to the board</button>`) : ""}<button class="small-btn" data-act="export" data-id="${esc(r.id)}">export JSON</button><button class="small-btn danger" data-act="delete" data-id="${esc(r.id)}">delete</button></div>${scorecard(r)}</div>`).join("") || '<div class="muted small">No runs yet in this browser.</div>';
+  $("runs").innerHTML = runs.map(r => `<div class="run-card"><div class="car-head"><b>${esc(r.model)}</b><span class="muted small">${new Date(r.created_at).toLocaleString()}</span><span class="grow"></span>${can ? (r.submitted_id ? `<span class="small-btn" style="cursor:default">shared with everyone ✓</span>` : `<button class="btn yellow" data-act="submit" data-id="${esc(r.id)}">Share this run with everyone</button>`) : ""}<button class="small-btn" data-act="export" data-id="${esc(r.id)}">export JSON</button><button class="small-btn danger" data-act="delete" data-id="${esc(r.id)}">delete</button></div>${scorecard(r)}</div>`).join("") || '<div class="muted small">No runs yet in this browser.</div>';
   $("runs").querySelectorAll("button").forEach(b => b.addEventListener("click", async () => { const r = runs.find(x => x.id === b.dataset.id); if (b.dataset.act === "export") { const rides = (await Promise.all((r.rides || []).map(id => getRide(id)))).filter(Boolean); download(`${r.id}.json`, { ...r, ride_data: rides }); } else if (b.dataset.act === "submit") submitRun(r, b); else { await deleteRun(r.id); renderRuns(); } }));
 }
 async function renderCommunityRuns() {
@@ -341,7 +344,7 @@ async function startRunAll() {
       onProgress: p => { $("runall-progress").style.width = `${(p.fraction * 100).toFixed(0)}%`; $("runall-status").textContent = `${p.label}${p.detail ? ` · ${p.detail}` : ""}`; },
       onFrame: (s, f) => { if (RENDERERS[s.ride.game]) { RENDERERS[s.ride.game](liveBoard, f); $("runall-live").textContent = `${s.ride.game_title}: turn ${f.turn}, ${f.score} ${s.ride.score_label}${f.action ? `, ${f.action} (${Math.round(f.latency_ms)} ms)` : ""}`; } } });
     const can = await community.available();
-    $("runall-result").innerHTML = `<h3>Scorecard · ${esc(run.model)}</h3>${scorecard(run)}<div class="result-actions">${can ? `<button class="small-btn yellow" id="runall-submit">submit to the board</button>` : ""}<button class="small-btn" id="runall-export">export JSON (with rides)</button></div>`;
+    $("runall-result").innerHTML = `<h3>Scorecard · ${esc(run.model)}</h3>${scorecard(run)}<div class="result-actions">${can ? `<button class="btn yellow" id="runall-submit">Share this run with everyone</button>` : ""}<button class="small-btn" id="runall-export">export JSON (with rides)</button></div>`;
     $("runall-export").addEventListener("click", async () => { const rides = (await Promise.all(run.rides.map(id => getRide(id)))).filter(Boolean); download(`${run.id}.json`, { ...run, ride_data: rides }); });
     if ($("runall-submit")) $("runall-submit").addEventListener("click", () => submitRun(run, $("runall-submit")));
     renderRuns();

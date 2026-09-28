@@ -173,3 +173,7 @@ footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wr
 .filters { display: flex; gap: 6px; margin-bottom: 8px; } .filters select { flex: 1; min-width: 0; }
 .row-item .tag.community { color: #6cc2ff; } .small-btn.yellow { background: var(--yellow); color: #111; border-color: var(--yellow); }
 a.small-btn { text-decoration: none; display: inline-flex; align-items: center; }
+
+/* sharing */
+.share-btn { display: block; width: 100%; margin-top: 12px; min-height: 46px; font-size: 13px; }
+.share-box { margin-top: 12px; padding: 10px 12px; border-radius: 9px; background: rgba(0,0,0,.3); font-size: 13px; } .share-box.shared { color: var(--ok); border: 1px solid rgba(88,214,141,.4); } .share-box a { word-break: break-all; }
