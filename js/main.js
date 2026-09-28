@@ -20,6 +20,7 @@ let cars = loadCars(); const carInfo = {};          // id -> probe result
 let view = "home", gameKey = "snake";
 let session = null, ride = null, index = 0, timer = null, stepping = false, abort = null;
 let bundledIndex = null;                            // data/rides/index.json
+let pendingRide = null, openSeq = 0;                // the ride a link asked for; the newest open wins over slower loads
 const triage = new Triage();
 
 const readyCars = () => cars.filter(c => carInfo[c.id] && carInfo[c.id].ready);
@@ -32,7 +33,7 @@ function route() {
   const h = location.hash.replace(/^#\/?/, ""); const [head, arg] = h.split("/");
   stop();
   if (head === "g" && REGISTRY[arg]) { view = "game"; gameKey = arg; }
-  else if (head === "ride" && arg) { view = "game"; openRide(arg); }
+  else if (head === "ride" && arg) { view = "game"; pendingRide = arg; }
   else if (VIEWS.includes(head) && head !== "game") view = head;
   else view = "home";
   VIEWS.forEach(v => $(`view-${v}`).classList.toggle("active", v === view));
@@ -161,12 +162,13 @@ async function submitRun(run, button) {
   } catch (e) { button.disabled = false; button.textContent = `sharing failed: ${e.message.slice(0, 60)}`; }
 }
 async function openRide(id) {
-  const r = await loadRideById(id); if (!r) return;
+  const seq = ++openSeq;
+  const r = await loadRideById(id); if (!r || seq !== openSeq) return;      // a later click superseded this one
   if (session && session.ride.id !== id) session = null;
   gameKey = r.game; ride = r; index = ride.status === "playing" && session ? ride.frames.length - 1 : 0;
   document.querySelectorAll(".strip a").forEach(a => a.classList.toggle("active", a.dataset.route === `g/${gameKey}`));
-  renderGameChrome(); renderFrame(); setPlayLabel(); renderRideList();
-  if (!timer) play();                                   // a selected ride starts playing by itself
+  renderGameChrome(); renderFrame(); renderRideList();
+  stop(); play();                                       // a selected ride starts playing from its first turn
 }
 
 // ---- game view ------------------------------------------------------------------------------------------------
@@ -179,6 +181,7 @@ function chips(s) {
   return out + `<span class="chip model">${esc(s.model || "?")}</span>` + (s.opponent ? `<span class="chip model">vs ${esc(s.opponent)}</span>` : "");
 }
 async function enterGame() {
+  if (pendingRide) { const id = pendingRide; pendingRide = null; await openRide(id); return; }       // a ride link: that ride, nothing else
   if (ride && ride.game !== gameKey) { ride = null; session = null; }
   renderGameChrome(); renderFrame(); setPlayLabel(); await renderRideList();
   if (!ride) { const first = (await allRideSummaries(gameKey))[0]; if (first) openRide(first.id); }   // open the newest ride and start it
