@@ -142,19 +142,10 @@ sqlite3 .wrangler/state/v3/d1/miniflare-D1DatabaseObject/*.sqlite < schema.sql
 
 ## The banner
 
-`assets/banner.svg` is a hand-drawn scene. To replace it with a rendered
-image, generate one from this prompt and save it as `assets/banner.jpg`
-(then point the `<img>` in `index.html` at it):
-
-> A wide cinematic view down an empty asphalt road converging to the horizon
-> at golden hour: deep blue sky fading to warm orange, a low sun with a soft
-> glow, a few flat clouds, distant hills and a small city skyline. On the right
-> shoulder a tall aluminium signpost carries two green highway signs with white
-> borders and bold white Highway Gothic lettering, "JEV ST" on top and "JEV
-> BENCHMARKS" with an arrow below, and a yellow diamond warning sign reading
-> "DECISIONS AHEAD". A dashed yellow centre line runs to the vanishing point,
-> white edge lines, a single red car far down the road. Photographic, crisp,
-> 3:1 aspect ratio, room at the bottom left for a title.
+The dusk road at the top of the page is an SVG drawn by `tools/banner.py`
+(perspective road, ridges, stars, and the JEV ST signpost). It sits inline in
+`index.html` so the signs pick up the page's Overpass font. Edit the script and
+run `python3 tools/banner.py` to redraw it in place.
 
 ## Layout of the repo
 
@@ -168,7 +159,7 @@ js/games/*.js      the eight game engines and harnesses
 js/apps/*.js       text decisions, app picker, HN triage, calibration
 js/store.js        IndexedDB for rides, asks and runs
 data/              presets, the PostHog app catalog, bundled rides
-tools/             the CORS relay
+tools/             the CORS relay and the banner drawing
 functions/ts/      the Cloudflare Pages Function that fronts api.typesafe.ai
 functions/api/     the board: rides and runs in Cloudflare D1 (schema.sql, wrangler.toml)
 ```
