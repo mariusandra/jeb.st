@@ -41,11 +41,11 @@ export const carUrl = car => (car.url.startsWith("/") ? `${location.origin}${car
 const explain = (car, e) => {
   if (e.name === "AbortError") return "timeout";
   if (e.name !== "TypeError") return `${e.name}: ${e.message}`;
-  if (car.url.startsWith("/")) return "this host has no /ts relay (deploy on Cloudflare Pages, or run tools/jebst-proxy.py --target https://api.typesafe.ai and point the car at it)";
-  if (car.kind === "typesafe") return "api.typesafe.ai refuses browser calls; set the URL to /ts on jeb.st or run tools/jebst-proxy.py with --api-key";
+  if (car.url.startsWith("/")) return "this host has no /ts relay (deploy on Cloudflare Pages, or run tools/jevst-proxy.py --target https://api.typesafe.ai and point the car at it)";
+  if (car.kind === "typesafe") return "api.typesafe.ai refuses browser calls; set the URL to /ts on jev.st or run tools/jevst-proxy.py with --api-key";
   if (car.kind === "posthog") return "gateway unreachable (check the region host: gateway.us.posthog.com or gateway.eu.posthog.com)";
-  if (/^http:\/\/(127\.0\.0\.1|localhost)/.test(car.url) && location.protocol === "https:") return "blocked: an https page can only reach a local server through tools/jebst-proxy.py (adds CORS and the private-network header); Chrome may also ask you to allow it";
-  return "unreachable or blocked by CORS: put tools/jebst-proxy.py in front of the server";
+  if (/^http:\/\/(127\.0\.0\.1|localhost)/.test(car.url) && location.protocol === "https:") return "blocked: an https page can only reach a local server through tools/jevst-proxy.py (adds CORS and the private-network header); Chrome may also ask you to allow it";
+  return "unreachable or blocked by CORS: put tools/jevst-proxy.py in front of the server";
 };
 const headers = car => {
   const h = { "content-type": "application/json" };

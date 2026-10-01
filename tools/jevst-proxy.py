@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""A tiny relay that puts CORS headers in front of any /v1/systemone server so the jeb.st page can drive it.
+"""A tiny relay that puts CORS headers in front of any /v1/systemone server so the jev.st page can drive it.
 
-Needed for every local car: model servers do not answer cross-origin preflights, and an https page such as jeb.st may only
+Needed for every local car: model servers do not answer cross-origin preflights, and an https page such as jev.st may only
 reach 127.0.0.1 when the preflight also carries Access-Control-Allow-Private-Network (Chrome may ask you once to allow it).
 
-    python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765
-    python3 tools/jebst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
+    python3 tools/jevst-proxy.py --target http://127.0.0.1:8001 --port 8765
+    python3 tools/jevst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
 
 Then add a car in the garage with URL http://127.0.0.1:8765. Standard library only. With --api-key the key is attached
 here and never has to be typed into the browser. --allow-origin restricts which pages may use the relay (default: any).
@@ -32,7 +32,7 @@ def main():
             self.send_header("Access-Control-Allow-Origin", origin)
             self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.send_header("Access-Control-Allow-Headers", "content-type, authorization")
-            self.send_header("Access-Control-Allow-Private-Network", "true")   # an https page (jeb.st) reaching 127.0.0.1: Chrome's Private Network Access check
+            self.send_header("Access-Control-Allow-Private-Network", "true")   # an https page (jev.st) reaching 127.0.0.1: Chrome's Private Network Access check
             self.send_header("Access-Control-Max-Age", "86400")
 
         def do_OPTIONS(self):

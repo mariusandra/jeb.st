@@ -1,6 +1,6 @@
-# jeb street · jeb.st
+# jev street · jev.st
 
-**JEB** = **JE**v **B**enchmarks. A static playground for Jev-style typed-decision
+**JEV ST** is where Jev models get benchmarked. A static playground for Jev-style typed-decision
 models: one forward pass per move, a probability on every option, nothing
 generated. Drive your own model through the apps, or hop into someone else's
 ride and watch how their model did.
@@ -58,7 +58,7 @@ Model servers do neither. Run the relay next to the server and point the car
 at the relay:
 
 ```bash
-python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765
+python3 tools/jevst-proxy.py --target http://127.0.0.1:8001 --port 8765
 ```
 
 **TypeSafe** refuses browser calls altogether (no `Access-Control-Allow-Origin`
@@ -69,7 +69,7 @@ on the Cloudflare deployment; when you serve the site with `python3 -m
 http.server`, run the relay with the key instead and point the car at it:
 
 ```bash
-python3 tools/jebst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
+python3 tools/jevst-proxy.py --target https://api.typesafe.ai --api-key "$TYPESAFE_API_KEY" --port 8766
 ```
 
 **PostHog's AI gateway** serves JevK5 (`posthog/hogference/jevk5-fp8-0.2`)
@@ -150,7 +150,7 @@ image, generate one from this prompt and save it as `assets/banner.jpg`
 > at golden hour: deep blue sky fading to warm orange, a low sun with a soft
 > glow, a few flat clouds, distant hills and a small city skyline. On the right
 > shoulder a tall aluminium signpost carries two green highway signs with white
-> borders and bold white Highway Gothic lettering, "JEB ST" on top and "JEV
+> borders and bold white Highway Gothic lettering, "JEV ST" on top and "JEV
 > BENCHMARKS" with an arrow below, and a yellow diamond warning sign reading
 > "DECISIONS AHEAD". A dashed yellow centre line runs to the vanishing point,
 > white edge lines, a single red car far down the road. Photographic, crisp,

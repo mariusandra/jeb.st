@@ -1,4 +1,4 @@
-// jeb street: the page controller. Hash routes, the garage, the game views, the text and app tools, rides and run-all.
+// jev street: the page controller. Hash routes, the garage, the game views, the text and app tools, rides and run-all.
 import { GAMES, REGISTRY } from "./games/index.js";
 import { loadCars, saveCars, currentCarId, setCurrentCar, carById, newCarId, probe, DEFAULT_CARS } from "./models.js";
 import { createRide, step, summary } from "./runner.js";

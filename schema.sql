@@ -1,4 +1,4 @@
--- jeb street submissions. Apply with: wrangler d1 execute jebst --remote --file schema.sql  (or --local for wrangler pages dev)
+-- jev street submissions. Apply with: wrangler d1 execute jebst --remote --file schema.sql  (or --local for wrangler pages dev)
 CREATE TABLE IF NOT EXISTS rides (
   id TEXT PRIMARY KEY,
   client_id TEXT,

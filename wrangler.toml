@@ -1,4 +1,4 @@
-# Cloudflare Pages configuration for jeb.st. The site is static; functions/ holds the TypeSafe hop and the board API.
+# Cloudflare Pages configuration for jev.st. The site is static; functions/ holds the TypeSafe hop and the board API.
 #
 # The board needs a D1 database bound as DB. One-time setup (needs `wrangler login`):
 #   npx wrangler d1 create jebst                        # prints a database_id

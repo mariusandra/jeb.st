@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jeb street · Jev benchmarks</title>
-  <meta name="description" content="jeb street: a playground for Jev-style typed-decision models. Drive your own model through Snake, Tetris, Connect Four, Wordle and more, or hop into someone else's ride.">
+  <title>jev street · Jev benchmarks</title>
+  <meta name="description" content="jev street: a playground for Jev-style typed-decision models. Drive your own model through Snake, Tetris, Connect Four, Wordle and more, or hop into someone else's ride.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;900&family=Overpass+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/street.css">
@@ -12,9 +12,9 @@
 </head>
 <body>
   <header class="banner">
-    <img src="assets/banner.svg" alt="A road running to the horizon under a wide sky; a signpost reads JEB ST and JEV BENCHMARKS, with a yellow warning sign, DECISIONS AHEAD" width="1400" height="480">
+    <img src="assets/banner.svg" alt="A road running to the horizon under a wide sky; a signpost reads JEV ST and JEV BENCHMARKS, with a yellow warning sign, DECISIONS AHEAD" width="1400" height="480">
     <div class="banner-copy">
-      <h1><span class="street-name">JEB</span> <span class="street-suffix">ST</span></h1>
+      <h1><span class="street-name">JEV</span> <span class="street-suffix">ST</span></h1>
       <p>Jev benchmarks. A playground for typed-decision models: one forward pass per move, probabilities on every option, nothing generated.</p>
     </div>
   </header>
@@ -77,8 +77,8 @@
         <div class="panel notice tall">
           <h3>Bringing your own car</h3>
           <p>A car is any server that speaks TypeSafe's <code>POST /v1/systemone</code>: <a href="https://github.com/Mapika/decider" target="_blank" rel="noopener">decider</a>, <a href="https://github.com/allebee/jevk5" target="_blank" rel="noopener">JevK5</a>, <a href="https://github.com/mohit67890/imajev" target="_blank" rel="noopener">imajev</a>, or TypeSafe's own Jev with your key.</p>
-          <p><b>The browser talks to it directly</b>, so the server must allow cross-origin requests from this page. Model servers do not, and an https page like this one may only reach <code>127.0.0.1</code> through a server that also answers Chrome's private-network check. The tiny relay that ships with this site (<a href="https://github.com/mariusandra/jeb.st/blob/main/tools/jebst-proxy.py" target="_blank" rel="noopener">tools/jebst-proxy.py</a>, standard library only) does both. Run it next to your server and point the car at it:</p>
-          <pre>python3 tools/jebst-proxy.py --target http://127.0.0.1:8001 --port 8765</pre>
+          <p><b>The browser talks to it directly</b>, so the server must allow cross-origin requests from this page. Model servers do not, and an https page like this one may only reach <code>127.0.0.1</code> through a server that also answers Chrome's private-network check. The tiny relay that ships with this site (<a href="https://github.com/mariusandra/jev.st/blob/main/tools/jevst-proxy.py" target="_blank" rel="noopener">tools/jevst-proxy.py</a>, standard library only) does both. Run it next to your server and point the car at it:</p>
+          <pre>python3 tools/jevst-proxy.py --target http://127.0.0.1:8001 --port 8765</pre>
           <p>Then set the car's URL to <code>http://127.0.0.1:8765</code>. Chrome may ask once whether this site may reach your local network; allow it.</p>
           <p><b>TypeSafe's API refuses browser calls</b>, so the TypeSafe car goes through this site's own hop at <code>/ts</code>: a Cloudflare function that forwards your request and key to api.typesafe.ai and keeps neither. The key itself stays in this browser. Every request is billed to it.</p>
           <p><b>PostHog's AI gateway</b> serves JevK5 as <code>posthog/hogference/jevk5-fp8-0.2</code> on the same <code>/v1/systemone</code> route, and it does allow browser calls, so that car talks to <code>gateway.us.posthog.com</code> (or <code>gateway.eu.posthog.com</code>) directly with a project secret key that has the <code>llm_gateway:read</code> scope. PostHog is still rolling the decision route out; until it is enabled for your project the check reports that plainly. Requests are billed to your gateway wallet.</p>
@@ -236,7 +236,7 @@
     </section>
   </main>
 
-  <footer><span>jeb street · a playground for typed-decision models · static, client-side, nothing leaves your browser but your own requests</span><span><a href="https://github.com/Mapika/decider" target="_blank" rel="noopener">decider</a> · <a href="https://github.com/allebee/jevk5" target="_blank" rel="noopener">JevK5</a> · <a href="https://github.com/mohit67890/imajev" target="_blank" rel="noopener">imajev</a> · <a href="https://docs.typesafe.ai/" target="_blank" rel="noopener">TypeSafe</a></span></footer>
+  <footer><span>jev street · a playground for typed-decision models · static, client-side, nothing leaves your browser but your own requests</span><span><a href="https://github.com/Mapika/decider" target="_blank" rel="noopener">decider</a> · <a href="https://github.com/allebee/jevk5" target="_blank" rel="noopener">JevK5</a> · <a href="https://github.com/mohit67890/imajev" target="_blank" rel="noopener">imajev</a> · <a href="https://docs.typesafe.ai/" target="_blank" rel="noopener">TypeSafe</a></span></footer>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
